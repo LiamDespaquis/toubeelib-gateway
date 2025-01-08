@@ -3,8 +3,24 @@ networks:
     driver: bridge
 services:
 
+
   # service api.toubeelib : api pour la prise de rdv
-  #
+  gateway.toubeelib:
+    image: canals/php:8.2-cli
+    env_file: ./toubeelib.env
+    container_name: gateway_toubeelib
+    ports:
+      - '6081:80'
+    volumes:
+      - ./gateway:/var/php
+    working_dir: /var/php
+    networks:
+      - toubeelib.net
+    depends_on:
+      - toubeelib.db
+    command: php -S 0.0.0.0:80 -t /var/php/public
+
+  # service api.toubeelib : api pour la prise de rdv
   api.toubeelib:
     image: canals/php:8.2-cli
     # build:
@@ -12,7 +28,6 @@ services:
     #   dockerfile: 8.3-cli.Dockerfile
     env_file: ./toubeelib.env
     container_name: api_toubeelib
-
     ports:
       - '6080:80'
     volumes:
@@ -24,7 +39,7 @@ services:
     depends_on:
       - toubeelib.db
     command: php -S 0.0.0.0:80 -t /var/php/public
-    
+
     # service toubeelib.db : base de données postgresql
   toubeelib.auth.db:
     image: 'postgres:latest'

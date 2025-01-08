@@ -1,0 +1,11 @@
+RewriteEngine On
+#
+# RewriteBase indispensable sur webetu :
+
+
+#
+# réécriture pour slim
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [QSA,L]
