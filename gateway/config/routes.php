@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Psr\Http\Message\ResponseInterface;
 use Slim\Exception\HttpNotFoundException;
+use toubeelibgateway\application\actions\GetPraticien;
 
 return function (\Slim\App $app): \Slim\App {
 
@@ -12,6 +13,8 @@ return function (\Slim\App $app): \Slim\App {
         $response->getBody()->write("Hello World");
         return $response->withStatus(200);
     });
+
+    $app->get('/praticiens/search[/]', GetPraticien::class)->setName('searchPraticiens');
 
     $app->get('/test[/]', \toubeelib\application\actions\test::class);
 
@@ -59,8 +62,6 @@ return function (\Slim\App $app): \Slim\App {
         ->add(AuthzPraticiens::class)
         ->add(AuthnMiddleware::class);
 
-    $app->get('/praticiens/search[/]', SearchPraticien::class)->setName('searchPraticiens')
-        ->add(AuthnMiddleware::class);
 
     $app->get("/praticiens/{id}[/]", GetPraticien::class)->setName('getPraticien')
         ->add(AuthnMiddleware::class);
