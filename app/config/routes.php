@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use Slim\Exception\HttpNotFoundException;
@@ -66,12 +67,12 @@ return function (\Slim\App $app): \Slim\App {
         ->add(AuthzPraticiens::class)
         ->add(AuthnMiddleware::class);
 
-    $app->get('/praticiens/search[/]', SearchPraticien::class)->setName('searchPraticiens')
+    $app->get('/praticiens[/]', SearchPraticien::class)->setName('searchPraticiens')
         ->add(AuthnMiddleware::class);
 
-    $app->get("/praticiens/{id}[/]", GetPraticien::class )->setName('getPraticien')
+    $app->get("/praticiens/{id}[/]", GetPraticien::class)->setName('getPraticien')
         ->add(AuthnMiddleware::class);
-    
+
 
     $app->post('/signin[/]', PostSignIn::class)->setName('signIn');
 
@@ -81,7 +82,7 @@ return function (\Slim\App $app): \Slim\App {
     });
     $app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {
         throw new HttpNotFoundException($request);
-    });    
+    });
 
 
     return $app;
