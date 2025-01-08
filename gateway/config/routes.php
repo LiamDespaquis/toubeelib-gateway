@@ -14,7 +14,7 @@ return function (\Slim\App $app): \Slim\App {
         return $response->withStatus(200);
     });
 
-    $app->get('/praticiens/search[/]', GetPraticien::class)->setName('searchPraticiens');
+    $app->get('/praticiens[/]', GetPraticien::class)->setName('searchPraticiens');
 
     $app->get('/test[/]', \toubeelib\application\actions\test::class);
 
