@@ -2,6 +2,7 @@
 
 use DI\ContainerBuilder;
 use Slim\Factory\AppFactory;
+use toubeelibgateway\middlewares\CorsMiddleware;
 
 $builder = new ContainerBuilder();
 $builder->addDefinitions(__DIR__ . '/settings.php');
@@ -17,7 +18,7 @@ $app->addBodyParsingMiddleware();
 // $app->addMiddleware($c->get(AuthnMiddleware::class));
 $app->addRoutingMiddleware();
 $app->addErrorMiddleware($c->get('displayErrorDetails'), false, false);
-/*$app->addMiddleware($c->get(CorsMiddleware::class));*/
+$app->addMiddleware($c->get(CorsMiddleware::class));
 
 
 

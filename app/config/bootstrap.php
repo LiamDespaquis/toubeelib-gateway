@@ -21,7 +21,7 @@ $app->addBodyParsingMiddleware();
 // $app->addMiddleware($c->get(AuthnMiddleware::class));
 $app->addRoutingMiddleware();
 $app->addErrorMiddleware($c->get('displayErrorDetails'), false, false);
-$app->addMiddleware($c->get(CorsMiddleware::class));
+// $app->addMiddleware($c->get(CorsMiddleware::class));
 
 //    ->getDefaultErrorHandler()
 //    ->forceContentType('application/json')
