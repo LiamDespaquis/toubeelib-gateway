@@ -7,15 +7,13 @@ use Slim\Middleware\ErrorMiddleware;
 use toubeelib\middlewares\AuthnMiddleware;
 use toubeelib\middlewares\CorsMiddleware;
 
-
-
 $builder = new ContainerBuilder();
 $builder->addDefinitions(__DIR__ . '/constantes.php');
-$builder->addDefinitions(__DIR__ . '/settings.php' );
+$builder->addDefinitions(__DIR__ . '/settings.php');
 $builder->addDefinitions(__DIR__ . '/dependencies.php');
 $builder->addDefinitions(__DIR__ . '/actions.php');
 
-$c=$builder->build();
+$c = $builder->build();
 $app = AppFactory::createFromContainer($c);
 
 
