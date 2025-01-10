@@ -32,7 +32,7 @@ services:
     env_file: ./toubeelib.env
     container_name: api_toubeelib_gt
     ports:
-      - '6080:80'
+      - $PORT_API:80
     volumes:
       - ./app:/var/php
       - ./sql:/var/sql
@@ -48,7 +48,7 @@ services:
     image: 'postgres:latest'
     env_file: ./toubeelibauthdb.env
     ports:
-      - '5433:5432'
+      - $PORT_AUTH:5432
     networks:
       - toubeelib.net
     volumes:
@@ -58,7 +58,7 @@ services:
     image: 'postgres:latest'
     env_file: ./toubeelibdb.env
     ports:
-      - '5432:5432'
+      - $PORT_DB:5432
     networks:
       - toubeelib.net
     volumes:
@@ -69,7 +69,7 @@ services:
   adminer:
     image: adminer
     ports:
-      - '8080:8080'
+      - $PORT_ADMINER:8080
     networks:
       - toubeelib.net
 
