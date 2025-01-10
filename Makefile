@@ -7,6 +7,7 @@ up:
 	docker compose up -d --remove-orphans --build
 composer:
 	docker exec -it $(phpdocker) composer install
+	docker exec -it gateway_toubeelib composer install
 genereDb:
 	docker exec -it $(phpdocker) php ./src/infrastructure/genereAuthDb.php
 	docker exec -it $(phpdocker) php ./src/infrastructure/genereDB.php

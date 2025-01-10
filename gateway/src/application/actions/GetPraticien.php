@@ -17,14 +17,7 @@ class GetPraticien extends AbstractAction
 
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
-        return $responseToubeelib = $this->client->request('GET', 'praticiens/search', [
-            'json' => [
-                "prenom" => "",
-                "nom" => "",
-                "specialite" => "",
-                "adresse" => "",
-                "tel" => ""
-            ],
+        return $responseToubeelib = $this->client->request('GET', 'praticiens', [
         ]);
         return $rs;
     }
