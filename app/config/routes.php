@@ -7,15 +7,17 @@ use Slim\Exception\HttpNotFoundException;
 
 
 use toubeelib\application\actions\GetPatient;
+
 use toubeelib\application\actions\GetPraticien;
 use toubeelib\application\actions\GetRdvByPatient;
 
 use toubeelib\application\actions\PostSignIn;
 use toubeelib\application\actions\SearchPraticien;
 use toubeelib\middlewares\AuthnMiddleware;
-use toubeelib\middlewares\AuthzPatient;
-use toubeelib\middlewares\AuthzPraticiens;
-use toubeelib\middlewares\AuthzRDV;
+
+
+
+use toubeelibgateway\application\actions\GetPraticien as toubeelibgatewayGetPraticien;
 
 return function (\Slim\App $app): \Slim\App {
 
@@ -31,30 +33,23 @@ return function (\Slim\App $app): \Slim\App {
 
     $app->get('/rdvs/{id}[/]', \toubeelib\application\actions\GetRdvId::class)
         ->setName('getRdv')
-        ->add(AuthzRDV::class)
         ->add(AuthnMiddleware::class);
 
     $app->delete('/rdvs/{id}[/]', \toubeelib\application\actions\DeleteRdvId::class)
         ->setName('deleteRdvId')
-        ->add(AuthzRDV::class)
         ->add(AuthnMiddleware::class);
 
     $app->patch('/rdvs/{id}[/]', \toubeelib\application\actions\PatchRdv::class)
         ->setName('patchRdv')
-        ->add(AuthzRDV::class)
         ->add(AuthnMiddleware::class);
 
 
     //PATIENTS
     $app->get('/patients/{id}/rdvs[/]', GetRdvByPatient::class)
-        ->setName('rdvPatient')
-        ->add(AuthzPatient::class)
-        ->add(AuthnMiddleware::class);
+        ->setName('rdvPatient');
 
     $app->get("/patients/{id}[/]", GetPatient::class)
-        ->setName('getPatient')
-        ->add(AuthzPatient::class)
-        ->add(AuthnMiddleware::class);
+        ->setName('getPatient');
 
     //PRATICIENS
 
@@ -64,7 +59,7 @@ return function (\Slim\App $app): \Slim\App {
 
     $app->get('/praticiens/{id}/rdvs[/]', \toubeelib\application\actions\GetPraticienPlanning::class)
         ->setName('planningPraticien')
-        ->add(AuthzPraticiens::class)
+        /*->add(AuthzPraticiens::class)*/
         ->add(AuthnMiddleware::class);
 
     $app->get('/praticiens[/]', SearchPraticien::class)->setName('searchPraticiens')

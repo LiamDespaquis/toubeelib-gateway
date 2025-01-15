@@ -19,7 +19,9 @@ class GetPraticienById extends AbstractAction
     {
 
         try {
-            return $responseToubeelib = $this->client->request('GET', 'praticiens/'.$args["id"], [
+            /*echo $args['route'];*/
+            return $responseToubeelib = $this->client->request('GET', 'praticiens'.$args["route"], [
+                "json" => $rq->getParsedBody()
             ]);
         } catch (ConnectException | ServerException $e) {
             throw new HttpInternalServerErrorException($rq, " … ");
