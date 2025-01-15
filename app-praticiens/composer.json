@@ -1,0 +1,27 @@
+{
+
+  "require" : {
+    "php": ">=8.2",
+    "slim/slim": "^4.14",
+    "slim/psr7": "^1.7",
+    "psr/container": "*",
+    "ramsey/uuid": "^4.7",
+    "firebase/php-jwt": "^6.10",
+    "monolog/monolog": "^3.7",
+    "fakerphp/faker":"^1.23",
+    "php-di/php-di": "^7.0",
+    "php-di/slim-bridge": "^3.4",
+    "respect/validation": "^2.3.7",
+        "ext-pdo": "*"
+
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^11.0",
+    "phpstan/phpstan": "^1.11"
+  },
+  "autoload": {
+    "psr-4" : {
+      "toubeelib\\" : "./src"
+    }
+  }
+}

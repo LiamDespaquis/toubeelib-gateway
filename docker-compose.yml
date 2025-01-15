@@ -73,3 +73,35 @@ services:
     networks:
       - toubeelib.net
 
+
+# micro service praticien 
+
+   # service api.toubeelib : api pour la prise de rdv
+  api.toubeelib.praticiens:
+    image: canals/php:8.2-cli
+    # build:
+    #   context: build
+    #   dockerfile: 8.3-cli.Dockerfile
+    env_file: ./toubeelib.env
+    container_name: api_toubeelib_praticien_gt
+    ports:
+      - $PORT_PRATICIEN:80
+    volumes:
+      - ./app-praticiens:/var/php
+      - ./app-praticiens/sql:/var/sql
+    working_dir: /var/php
+    networks:
+      - toubeelib.net
+    depends_on:
+      - toubeelib.praticiens.db
+    command: php -S 0.0.0.0:80 -t /var/php/public
+
+  toubeelib.praticiens.db:
+    image: 'postgres:latest'
+    env_file: ./toubeelibdb.env
+    ports:
+      - $PORT_PRATICIEN_DB:5432
+    networks:
+      - toubeelib.net
+    volumes:
+      - ./app/sql:/var/sql'
