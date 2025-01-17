@@ -2,6 +2,7 @@
 
 namespace toubeelibgateway\application\actions;
 
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\ServerException;
@@ -15,6 +16,10 @@ use Slim\Exception\HttpInternalServerErrorException;
 
 class GetPraticienById extends AbstractAction
 {
+    public function __construct(Client $client)
+    {
+        $this->client = $client;
+    }
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
 

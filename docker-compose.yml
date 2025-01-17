@@ -96,6 +96,33 @@ services:
       - toubeelib.praticiens.db
     command: php -S 0.0.0.0:80 -t /var/php/public
 
+   # service api.toubeelib : api pour la prise de rdv
+  api.toubeelib.rdv:
+    image: canals/php:8.2-cli
+    container_name: api_toubeelib_rdv
+    ports:
+      - $PORT_RDV:80
+    volumes:
+      - ./app-rdv:/var/php
+      - ./app-rdv/sql:/var/sql
+    working_dir: /var/php
+    networks:
+      - toubeelib.net
+    depends_on:
+      - toubeelib.rdv.db
+    command: php -S 0.0.0.0:80 -t /var/php/public
+
+  toubeelib.rdv.db:
+    image: 'postgres:latest'
+    env_file: ./toubeelibdb.env
+    container_name: toubeelib.rdv.db
+    ports:
+      - $PORT_RDV_BD:5432
+    networks:
+      - toubeelib.net
+    volumes:
+      - ./app/sql:/var/sql'
+
   toubeelib.praticiens.db:
     image: 'postgres:latest'
     env_file: ./toubeelibdb.env

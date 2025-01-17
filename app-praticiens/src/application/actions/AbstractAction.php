@@ -14,8 +14,6 @@ use toubeelib\praticiens\providers\auth\AuthnProviderInterface;
 abstract class AbstractAction
 {
     protected ServicePraticienInterface $servicePraticien;
-    protected AuthnProviderInterface $authProvider;
-    protected ServicePatientInterface $servicePatient;
     protected string $formatDate;
     protected Container $cont;
 
@@ -28,7 +26,6 @@ abstract class AbstractAction
     public function __construct(Container $cont)
     {
         $this->servicePraticien = $cont->get(ServicePraticienInterface::class);
-        $this->servicePatient = $cont->get(ServicePatientInterface::class);
         $this->formatDate = $cont->get('date.format');
         $this->loger = $cont->get(Logger::class)->withName(get_class($this));
 

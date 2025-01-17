@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Slim\Exception\HttpNotFoundException;
+use Slim\Routing\RouteCollectorProxy;
 use toubeelib\praticiens\application\actions\GetDisposPraticienDate;
 use toubeelib\praticiens\application\actions\GetPraticien;
 use toubeelib\praticiens\application\actions\GetPraticienPlanning;
@@ -16,20 +17,16 @@ return function (\Slim\App $app): \Slim\App {
     $app->get('/', HomeAction::class);
     //PRATICIENS
 
+    $app->group('/praticiens', function (RouteCollectorProxy $group) {
+        $group->get('[/]', SearchPraticien::class)->setName('searchPraticiens');
+        $group->get('/{id}[/]', GetPraticien::class)->setName('getPraticien');
+    });
     $app->get('/praticiens/{id}/dispos[/]', GetDisposPraticienDate::class)
-        ->setName('disposPraticienDate')
-        ->add(AuthnMiddleware::class);
+        ->setName('disposPraticienDate');
 
-    $app->get('/praticiens/{id}/rdvs[/]', GetPraticienPlanning::class)
-        ->setName('planningPraticien')
-        ->add(AuthzPraticiens::class)
-        ->add(AuthnMiddleware::class);
+    /*$app->get('/praticiens/{id}/rdvs[/]', GetPraticienPlanning::class)*/
+    /*    ->setName('planningPraticien');*/
 
-    $app->get('/praticiens[/]', SearchPraticien::class)->setName('searchPraticiens')
-        ->add(AuthnMiddleware::class);
-
-    $app->get("/praticiens/{id}[/]", GetPraticien::class)->setName('getPraticien')
-        ->add(AuthnMiddleware::class);
 
     $app->options('/{routes:.+}', function ($request, $response, $args) {
         return $response;
