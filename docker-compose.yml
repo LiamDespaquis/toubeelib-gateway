@@ -83,7 +83,7 @@ services:
     #   context: build
     #   dockerfile: 8.3-cli.Dockerfile
     env_file: ./toubeelib.env
-    container_name: api_toubeelib_praticien_gt
+    container_name: api_toubeelib_praticien
     ports:
       - $PORT_PRATICIEN:80
     volumes:
@@ -99,8 +99,9 @@ services:
   toubeelib.praticiens.db:
     image: 'postgres:latest'
     env_file: ./toubeelibdb.env
+    container_name: toubeelib.praticiens.db
     ports:
-      - $PORT_PRATICIEN_DB:5432
+      - $PORT_PRATICIEN_BD:5432
     networks:
       - toubeelib.net
     volumes:

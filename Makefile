@@ -1,8 +1,10 @@
-phpdocker=api_toubeelib
+phpdocker=api_toubeelib_gt
+phpdockerPraticien=api_toubeelib_praticien
 install: 
 	make up
 	make composer
 	make genereDb
+	make genereDbPraticien
 up:
 	docker compose up -d --remove-orphans --build
 composer:
@@ -11,6 +13,8 @@ composer:
 genereDb:
 	docker exec -it $(phpdocker) php ./src/infrastructure/genereAuthDb.php
 	docker exec -it $(phpdocker) php ./src/infrastructure/genereDB.php
+genereDbPraticien:
+	docker exec -it $(phpdockerPraticien) php ./src/infrastructure/genereDB.php
 watchLogs:
 	watch -n 2 tail app/var/logs
 confFiles:
