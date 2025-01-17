@@ -1,4 +1,6 @@
 <?php
-namespace toubeelib\core\services;
+namespace toubeelib\praticiens\core\services;
 
-class ServiceOperationInvalideException extends \Exception{}
+use Exception;
+
+class ServiceOperationInvalideException extends Exception{}

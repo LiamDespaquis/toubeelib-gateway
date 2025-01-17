@@ -1,17 +1,17 @@
 <?php
 
-namespace toubeelib\application\actions;
+namespace toubeelib\praticiens\application\actions;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Routing\RouteContext;
-use toubeelib\application\actions\AbstractAction;
-use toubeelib\application\renderer\JsonRenderer;
-use toubeelib\core\services\praticien\ServicePraticien;
-use toubeelib\core\services\rdv\ServiceRDV;
-use toubeelib\core\services\rdv\ServiceRDVInvalidDataException;
-use toubeelib\infrastructure\repositories\ArrayPraticienRepository;
-use toubeelib\infrastructure\repositories\ArrayRdvRepository;
+use toubeelib\praticiens\application\actions\AbstractAction;
+use toubeelib\praticiens\application\renderer\JsonRenderer;
+use toubeelib\praticiens\core\services\praticien\ServicePraticien;
+use toubeelib\praticiens\core\services\rdv\ServiceRDV;
+use toubeelib\praticiens\core\services\rdv\ServiceRDVInvalidDataException;
+use toubeelib\praticiens\infrastructure\repositories\ArrayPraticienRepository;
+use toubeelib\praticiens\infrastructure\repositories\ArrayRdvRepository;
 use function _PHPStan_9815bbba4\React\Async\waterfall;
 
 class test extends AbstractAction

@@ -1,13 +1,16 @@
 <?php
-namespace toubeelib\infrastructure\repositories;
+namespace toubeelib\praticiens\infrastructure\repositories;
 
+use DateTimeImmutable;
 use DI\Container;
+use Exception;
 use Monolog\Logger;
 use PDO;
-use toubeelib\core\domain\entities\rdv\RendezVous;
-use toubeelib\core\repositoryInterfaces\RdvRepositoryInterface;
-use toubeelib\core\repositoryInterfaces\RepositoryEntityNotFoundException;
-use toubeelib\core\repositoryInterfaces\RepositoryInternalException;
+use PDOException;
+use toubeelib\praticiens\core\domain\entities\rdv\RendezVous;
+use toubeelib\praticiens\core\repositoryInterfaces\RdvRepositoryInterface;
+use toubeelib\praticiens\core\repositoryInterfaces\RepositoryEntityNotFoundException;
+use toubeelib\praticiens\core\repositoryInterfaces\RepositoryInternalException;
 
 class PgRdvRepository implements  RdvRepositoryInterface{
 
@@ -47,14 +50,14 @@ class PgRdvRepository implements  RdvRepositoryInterface{
                     $rdv['praticienid'],
                     $rdv['patientid'],
                     $rdv['specialite'],
-                    \DateTimeImmutable::createFromFormat('Y-m-d H:i',$rdv['date']),
+                    DateTimeImmutable::createFromFormat('Y-m-d H:i',$rdv['date']),
                 $rdv['status']);
                 $retour->setId($rdv['id']);
                 return $retour;
             }else{
                 throw new RepositoryEntityNotFoundException("Rendez vous $id n'existe pas");
             }
-        }catch(\PDOException $e){
+        }catch(PDOException $e){
             // throw new RepositoryInternalException('Problème avec la base de donnée postgres');
             throw new RepositoryInternalException($e->getMessage());
         }
@@ -73,7 +76,7 @@ class PgRdvRepository implements  RdvRepositoryInterface{
                 'status' => $rdv->getStatus()
             ];
             $this->pdo->prepare($query)->execute($val);
-        }catch(\PDOException $e){
+        }catch(PDOException $e){
             throw new RepositoryInternalException($e->getMessage());
         }
     }
@@ -88,7 +91,7 @@ class PgRdvRepository implements  RdvRepositoryInterface{
 
             $this->pdo->prepare($query)->execute($val);
 
-        }catch(\PDOException $e){
+        }catch(PDOException $e){
             throw new RepositoryInternalException($e->getMessage());
         }
     }
@@ -107,7 +110,7 @@ class PgRdvRepository implements  RdvRepositoryInterface{
             if($result){
                 $retour = [];
                 foreach($result as $r){
-                    $rdv = new RendezVous($r['praticienid'],$r['patientid'],$r['specialite'],new \DateTimeImmutable($r['date']));
+                    $rdv = new RendezVous($r['praticienid'],$r['patientid'],$r['specialite'],new DateTimeImmutable($r['date']));
                     $rdv->setId($r['id']);
                     $retour[] = $rdv;
                 }
@@ -119,9 +122,9 @@ class PgRdvRepository implements  RdvRepositoryInterface{
                 throw new RepositoryEntityNotFoundException("Praticien $id not found");
             }
 
-        }catch(\PDOException $e){
+        }catch(PDOException $e){
             throw new RepositoryInternalException($e->getMessage());
-        }catch(\Exception $e){
+        }catch(Exception $e){
             throw new RepositoryInternalException($e->getMessage());
         }
     }
@@ -151,7 +154,7 @@ class PgRdvRepository implements  RdvRepositoryInterface{
             if($result){
                 $retour = [];
                 foreach($result as $r){
-                    $rdv = new RendezVous($r['praticienid'],$r['patientid'],$r['specialite'],new \DateTimeImmutable($r['date']), $r['status']);
+                    $rdv = new RendezVous($r['praticienid'],$r['patientid'],$r['specialite'],new DateTimeImmutable($r['date']), $r['status']);
                     $rdv->setId($r['id']);
                     $retour[] = $rdv;
                 }
@@ -162,9 +165,9 @@ class PgRdvRepository implements  RdvRepositoryInterface{
                 throw new RepositoryEntityNotFoundException("Patient $id not found");
             }
 
-        }catch(\PDOException $e){
+        }catch(PDOException $e){
             throw new RepositoryInternalException($e->getMessage());
-        }catch(\Exception $e){
+        }catch(Exception $e){
             throw new RepositoryInternalException($e->getMessage());
         }
     }
@@ -184,7 +187,7 @@ class PgRdvRepository implements  RdvRepositoryInterface{
                 throw new RepositoryEntityNotFoundException("Rdv $id non trouvé, rdv affécté = $rdvAffecte");
             }
 
-        }catch(\PDOException $e){
+        }catch(PDOException $e){
             throw new RepositoryInternalException($e->getMessage());
         }
     }
@@ -208,7 +211,7 @@ class PgRdvRepository implements  RdvRepositoryInterface{
             ];
             $this->pdo->prepare($query)->execute($val);
 
-        }catch(\PDOException $e){
+        }catch(PDOException $e){
             $this->loger->error($e->getMessage());
             throw new RepositoryInternalException($e->getMessage());
         }

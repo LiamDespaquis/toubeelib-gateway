@@ -1,8 +1,9 @@
 <?php
 
-namespace toubeelib\application\actions;
+namespace toubeelib\praticiens\application\actions;
 
 use Error;
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Respect\Validation\Exceptions\NestedValidationException;
@@ -10,13 +11,9 @@ use Respect\Validation\Validator;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Routing\RouteContext;
-use toubeelib\application\renderer\JsonRenderer;
-use toubeelib\core\dto\InputRdvDto;
-use toubeelib\core\services\praticien\ServicePraticien;
-use toubeelib\core\services\rdv\ServiceRDV;
-use toubeelib\core\services\rdv\ServiceRDVInvalidDataException;
-use toubeelib\infrastructure\repositories\ArrayPraticienRepository;
-use toubeelib\infrastructure\repositories\ArrayRdvRepository;
+use toubeelib\praticiens\application\renderer\JsonRenderer;
+use toubeelib\praticiens\core\dto\InputRdvDto;
+use toubeelib\praticiens\core\services\rdv\ServiceRDVInvalidDataException;
 
 class PostCreateRdv extends AbstractAction
 {
@@ -57,7 +54,7 @@ class PostCreateRdv extends AbstractAction
         } catch (ServiceRDVInvalidDataException $e) {
             $this->loger->error('CreateRdv : '.$e->getMessage());
             throw new HttpBadRequestException($rq, $e->getMessage());
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->loger->error('CreateRdv : '.$e->getMessage());
             throw new HttpInternalServerErrorException($rq, $e->getMessage());
         } catch (Error $e) {

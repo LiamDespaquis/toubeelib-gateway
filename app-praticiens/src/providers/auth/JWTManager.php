@@ -1,12 +1,12 @@
 <?php
-namespace toubeelib\providers\auth;
+namespace toubeelib\praticiens\providers\auth;
 
 use DI\Container;
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Monolog\Logger;
-use toubeelib\core\dto\AuthDTO;
+use toubeelib\praticiens\core\dto\AuthDTO;
 
 class JWTManager{
 
@@ -24,9 +24,9 @@ class JWTManager{
 		// $this->key = parse_ini_file($co->get('token.key.path'))['JWT_SECRET_KEY'];
 		$this->key = getenv('JWT_SECRET_KEY');
 		$this->algo = $co->get('token.jwt.algo');
-		$this->loger = $co->get(Logger::class)->withName("JWTManager");;
+		$this->loger = $co->get(Logger::class)->withName("JWTManager");
 
-	}
+    }
 
 	public function createAcessToken(AuthDTO $user): string{
 		/*

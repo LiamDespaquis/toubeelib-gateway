@@ -1,7 +1,7 @@
 <?php
-namespace toubeelib\core\repositoryInterfaces;
+namespace toubeelib\praticiens\core\repositoryInterfaces;
 
-use toubeelib\core\domain\entities\User;
+use toubeelib\praticiens\core\domain\entities\User;
 
 interface AuthRepositoryInterface {
     public function getUser(string $id): User;

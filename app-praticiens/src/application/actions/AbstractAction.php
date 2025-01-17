@@ -1,17 +1,16 @@
 <?php
 
-namespace toubeelib\application\actions;
+namespace toubeelib\praticiens\application\actions;
 
 
 use DI\Container;
 use Monolog\Logger;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use toubeelib\core\services\ServiceAuthInterface;
-use toubeelib\core\services\praticien\ServicePraticienInterface;
-use toubeelib\core\services\rdv\ServiceRDVInterface;
-use toubeelib\providers\auth\AuthnProviderInterface;
-use toubeelib\core\services\patient\ServicePatientInterface;
+use toubeelib\praticiens\core\services\patient\ServicePatientInterface;
+use toubeelib\praticiens\core\services\praticien\ServicePraticienInterface;
+use toubeelib\praticiens\core\services\rdv\ServiceRDVInterface;
+use toubeelib\praticiens\providers\auth\AuthnProviderInterface;
 
 abstract class AbstractAction
 {

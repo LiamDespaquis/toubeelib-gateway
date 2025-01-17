@@ -1,20 +1,16 @@
 <?php
 
-namespace toubeelib\application\actions;
+namespace toubeelib\praticiens\application\actions;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Respect\Validation\Validator;
 use Respect\Validation\Exceptions\NestedValidationException;
+use Respect\Validation\Validator;
 use Slim\Exception\HttpBadRequestException;
-use toubeelib\application\actions\AbstractAction;
-use toubeelib\application\renderer\JsonRenderer;
-use toubeelib\core\dto\InputRdvDto;
-use toubeelib\core\services\praticien\ServicePraticien;
-use toubeelib\core\services\rdv\ServiceRDVInvalidDataException;
-use toubeelib\infrastructure\repositories\ArrayRdvRepository;
-use toubeelib\infrastructure\repositories\ArrayPraticienRepository;
-use toubeelib\core\services\rdv\ServiceRDV;
+use toubeelib\praticiens\application\actions\AbstractAction;
+use toubeelib\praticiens\application\renderer\JsonRenderer;
+use toubeelib\praticiens\core\dto\InputRdvDto;
+use toubeelib\praticiens\core\services\rdv\ServiceRDVInvalidDataException;
 
 class PatchRdv extends AbstractAction
 {

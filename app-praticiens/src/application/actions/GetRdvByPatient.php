@@ -1,17 +1,16 @@
 <?php
 
-namespace toubeelib\application\actions;
+namespace toubeelib\praticiens\application\actions;
 
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Routing\RouteContext;
-use toubeelib\application\actions\AbstractAction;
-use toubeelib\application\renderer\JsonRenderer;
-use toubeelib\core\dto\RdvDTO;
-use toubeelib\core\services\ServiceRessourceNotFoundException;
-use toubeelib\core\services\rdv\ServiceRDVInvalidDataException;
+use toubeelib\praticiens\application\actions\AbstractAction;
+use toubeelib\praticiens\application\renderer\JsonRenderer;
+use toubeelib\praticiens\core\services\ServiceRessourceNotFoundException;
 
 class GetRdvByPatient extends AbstractAction
 {
@@ -37,7 +36,7 @@ class GetRdvByPatient extends AbstractAction
         } catch (ServiceRessourceNotFoundException $e) {
             $this->loger->error('GetRdvPatient : '.$args['id'].' : '.$e->getMessage());
             throw new HttpNotFoundException($rq, $e->getMessage());
-        }catch (\Exception $e){
+        }catch (Exception $e){
             $this->loger->error('GetRdvPatient : '.$args['id'].' : '.$e->getMessage());
             throw new HttpInternalServerErrorException($rq,$e->getMessage());
         }

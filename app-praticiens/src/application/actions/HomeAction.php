@@ -1,11 +1,11 @@
 <?php
 
-namespace toubeelib\application\actions;
+namespace toubeelib\praticiens\application\actions;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
- class HomeAction extends AbstractAction
+class HomeAction extends AbstractAction
 {
 
 

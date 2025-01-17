@@ -1,8 +1,10 @@
 <?php
 
-namespace toubeelib\core\services\rdv;
+namespace toubeelib\praticiens\core\services\rdv;
 
-class ServiceRDVInvalidDataException extends \Exception
+use Exception;
+
+class ServiceRDVInvalidDataException extends Exception
 {
 
 }

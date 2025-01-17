@@ -1,6 +1,7 @@
 <?php
-namespace toubeelib\core\services;
+namespace toubeelib\praticiens\core\services;
 
-use \Exception as Exception;
+use Exception as Exception;
+
 class ServiceRessourceNotFoundException extends Exception{
 }

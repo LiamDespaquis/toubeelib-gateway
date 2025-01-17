@@ -1,19 +1,20 @@
 <?php
 
-namespace toubeelib\application\actions;
+namespace toubeelib\praticiens\application\actions;
 
 use DI\Container;
 use Error;
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Respect\Validation\Exceptions\NestedValidationException;
 use Respect\Validation\Validator;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpInternalServerErrorException;
-use toubeelib\application\renderer\JsonRenderer;
-use toubeelib\core\dto\CredentialsDTO;
-use toubeelib\core\services\rdv\ServiceRDVInvalidDataException;
-use toubeelib\providers\auth\AuthnProviderInterface;
+use toubeelib\praticiens\application\renderer\JsonRenderer;
+use toubeelib\praticiens\core\dto\CredentialsDTO;
+use toubeelib\praticiens\core\services\rdv\ServiceRDVInvalidDataException;
+use toubeelib\praticiens\providers\auth\AuthnProviderInterface;
 
 class PostSignIn extends AbstractAction
 {
@@ -48,7 +49,7 @@ class PostSignIn extends AbstractAction
             throw new HttpBadRequestException($rq, $e->getMessage());
         } catch (ServiceRDVInvalidDataException $e) {
             throw new HttpBadRequestException($rq, $e->getMessage());
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new HttpInternalServerErrorException($rq, $e->getMessage());
 //            throw new HttpInternalServerErrorException($rq, "Erreur serveur");
         } catch (Error $e) {

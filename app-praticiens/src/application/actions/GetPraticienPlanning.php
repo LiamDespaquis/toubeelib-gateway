@@ -1,16 +1,15 @@
 <?php
-namespace toubeelib\application\actions;
+namespace toubeelib\praticiens\application\actions;
 
 
-use DateTime;
 use DateTimeImmutable;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Respect\Validation\Exceptions\NestedValidationException;
 use Respect\Validation\Validator;
 use Slim\Exception\HttpBadRequestException;
-use toubeelib\application\actions\AbstractAction;
-use toubeelib\application\renderer\JsonRenderer;
+use toubeelib\praticiens\application\actions\AbstractAction;
+use toubeelib\praticiens\application\renderer\JsonRenderer;
 
 class GetPraticienPlanning extends AbstractAction{
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface

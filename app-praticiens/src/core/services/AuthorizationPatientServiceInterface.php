@@ -1,5 +1,5 @@
 <?php
-namespace toubeelib\core\services;
+namespace toubeelib\praticiens\core\services;
 
 interface AuthorizationPatientServiceInterface
 {

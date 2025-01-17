@@ -1,12 +1,12 @@
 <?php
 
-namespace toubeelib\core\domain\entities\rdv;
+namespace toubeelib\praticiens\core\domain\entities\rdv;
 
 use DateTimeImmutable;
-use toubeelib\core\domain\entities\Entity;
-use toubeelib\core\dto\InputRdvDto;
-use toubeelib\core\dto\RdvDTO;
-use toubeelib\core\dto\PraticienDTO;
+use toubeelib\praticiens\core\domain\entities\Entity;
+use toubeelib\praticiens\core\dto\InputRdvDto;
+use toubeelib\praticiens\core\dto\PraticienDTO;
+use toubeelib\praticiens\core\dto\RdvDTO;
 
 class RendezVous extends Entity
 {
@@ -18,7 +18,7 @@ class RendezVous extends Entity
     public const  PAIE = 4;
     public const  PAS_PAYE = 5;
 
-    protected \DateTimeImmutable $dateHeure;
+    protected DateTimeImmutable $dateHeure;
     protected string $praticienId;
     protected string $specialite;
     protected string $patientId;
@@ -30,7 +30,7 @@ class RendezVous extends Entity
     }
 
 
-    public function getDateHeure(): \DateTimeImmutable
+    public function getDateHeure(): DateTimeImmutable
     {
         return $this->dateHeure;
     }
@@ -60,7 +60,7 @@ class RendezVous extends Entity
      *       $r1->setID('r1');
      * @param mixed $status
      */
-    public function __construct(string $praticienId, string $patientId, string $specialite, \DateTimeImmutable $dateHeure, $status = RendezVous::MAINTENU)
+    public function __construct(string $praticienId, string $patientId, string $specialite, DateTimeImmutable $dateHeure, $status = RendezVous::MAINTENU)
     {
         $this->praticienId = $praticienId;
         $this->patientId = $patientId;

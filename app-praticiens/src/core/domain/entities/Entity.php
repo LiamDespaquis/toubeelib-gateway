@@ -1,6 +1,8 @@
 <?php
 
-namespace toubeelib\core\domain\entities;
+namespace toubeelib\praticiens\core\domain\entities;
+
+use Exception;
 
 abstract class Entity
 {
@@ -8,7 +10,7 @@ abstract class Entity
     protected ?string $id=null;
     public function __get(string $name): mixed
     {
-        return property_exists($this, $name) ? $this->$name : throw new \Exception(static::class . ": Property $name does not exist");
+        return property_exists($this, $name) ? $this->$name : throw new Exception(static::class . ": Property $name does not exist");
     }
 
     public function setId(string $ID): void

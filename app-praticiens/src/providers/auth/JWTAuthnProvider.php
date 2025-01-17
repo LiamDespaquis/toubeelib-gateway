@@ -1,11 +1,11 @@
 <?php
-namespace toubeelib\providers\auth;
+namespace toubeelib\praticiens\providers\auth;
 
 use DI\Container;
-use toubeelib\core\dto\AuthDTO;
-use toubeelib\core\dto\CredentialsDTO;
-use toubeelib\core\services\ServiceAuthBadPasswordException;
-use toubeelib\core\services\ServiceAuthInterface;
+use Exception;
+use toubeelib\praticiens\core\dto\AuthDTO;
+use toubeelib\praticiens\core\dto\CredentialsDTO;
+use toubeelib\praticiens\core\services\ServiceAuthInterface;
 
 class JWTAuthnProvider implements AuthnProviderInterface{
 	protected ServiceAuthInterface $serviceAuth;
@@ -40,7 +40,7 @@ class JWTAuthnProvider implements AuthnProviderInterface{
 		$authDto = new AuthDTO($token['sub'], $token['role']);
 		return $authDto;
 		}
-		catch(\Exception $e){
+		catch(Exception $e){
 			throw new AuthInvalidException($e->getMessage());
 		}
 

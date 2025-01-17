@@ -1,9 +1,9 @@
 <?php
 
-namespace toubeelib\core\domain\entities\patient;
+namespace toubeelib\praticiens\core\domain\entities\patient;
 
-use toubeelib\core\domain\entities\Entity;
-use toubeelib\core\dto\PatientDTO;
+use toubeelib\praticiens\core\domain\entities\Entity;
+use toubeelib\praticiens\core\dto\PatientDTO;
 
 class Patient extends Entity
 {

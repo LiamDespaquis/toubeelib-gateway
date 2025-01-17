@@ -5,11 +5,7 @@ $nbPatient=400;
 $nbRdv=240;
 require_once __DIR__ .'/../../vendor/autoload.php';
 
-use toubeelib\core\domain\entities\rdv\RendezVous;
-use toubeelib\core\services\rdv\ServiceRDV;
-
-
-
+use toubeelib\praticiens\core\domain\entities\rdv\RendezVous;
 
 
 $co = new PDO('pgsql:host=toubeelib.db;port=5432;dbname=toubeelib;user=user;password=toto');
@@ -30,7 +26,7 @@ $co = new PDO('pgsql:host=toubeelib.db;port=5432;dbname=toubeelib;user=user;pass
 		$rdv = new RendezVous($r['praticienid'],
 			$r['patientid'],
 			$r['specialite'],
-			new \DateTimeImmutable($r['date']));
+			new DateTimeImmutable($r['date']));
                     $rdv->setId($r['id']);
                     $retour[] = $rdv;
                 }

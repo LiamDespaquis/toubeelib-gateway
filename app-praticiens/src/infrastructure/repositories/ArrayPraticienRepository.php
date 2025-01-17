@@ -1,12 +1,12 @@
 <?php
 
-namespace toubeelib\infrastructure\repositories;
+namespace toubeelib\praticiens\infrastructure\repositories;
 
 use Ramsey\Uuid\Uuid;
-use toubeelib\core\domain\entities\praticien\Praticien;
-use toubeelib\core\domain\entities\praticien\Specialite;
-use toubeelib\core\repositoryInterfaces\PraticienRepositoryInterface;
-use toubeelib\core\repositoryInterfaces\RepositoryEntityNotFoundException;
+use toubeelib\praticiens\core\domain\entities\praticien\Praticien;
+use toubeelib\praticiens\core\domain\entities\praticien\Specialite;
+use toubeelib\praticiens\core\repositoryInterfaces\PraticienRepositoryInterface;
+use toubeelib\praticiens\core\repositoryInterfaces\RepositoryEntityNotFoundException;
 
 class ArrayPraticienRepository implements PraticienRepositoryInterface
 {

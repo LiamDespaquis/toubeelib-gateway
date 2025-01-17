@@ -5,8 +5,8 @@ $nbPatient=400;
 $nbRdv=240;
 require_once __DIR__ .'/../../vendor/autoload.php';
 
-use toubeelib\core\domain\entities\rdv\RendezVous;
-use toubeelib\core\services\rdv\ServiceRDV;
+use toubeelib\praticiens\core\domain\entities\rdv\RendezVous;
+use toubeelib\praticiens\core\services\rdv\ServiceRDV;
 
 $drop='drop table if exists patient,praticien,status,specialite,rdv;';
 $cspecialite='

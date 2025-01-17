@@ -1,15 +1,16 @@
 <?php
 
-namespace toubeelib\core\dto;
+namespace toubeelib\praticiens\core\dto;
 
-use toubeelib\core\domain\entities\rdv\RendezVous;
-use toubeelib\core\dto\PraticienDTO;
-use toubeelib\core\dto\DTO;
+use DateTimeImmutable;
+use toubeelib\praticiens\core\domain\entities\rdv\RendezVous;
+use toubeelib\praticiens\core\dto\DTO;
+use toubeelib\praticiens\core\dto\PraticienDTO;
 
 class RdvDTO extends DTO
 {
     public string $id;
-    public \DateTimeImmutable $dateHeure;
+    public DateTimeImmutable $dateHeure;
     public PraticienDTO $praticien;
     public string $specialiteLabel;
     public string $patientId;

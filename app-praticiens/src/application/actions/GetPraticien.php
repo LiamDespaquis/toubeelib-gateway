@@ -1,6 +1,6 @@
 <?php
 
-namespace toubeelib\application\actions;
+namespace toubeelib\praticiens\application\actions;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -8,8 +8,8 @@ use Respect\Validation\Exceptions\NestedValidationException;
 use Respect\Validation\Validator;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
-use toubeelib\application\renderer\JsonRenderer;
-use toubeelib\core\services\praticien\ServicePraticienInvalidDataException;
+use toubeelib\praticiens\application\renderer\JsonRenderer;
+use toubeelib\praticiens\core\services\praticien\ServicePraticienInvalidDataException;
 
 class GetPraticien extends AbstractAction
 {

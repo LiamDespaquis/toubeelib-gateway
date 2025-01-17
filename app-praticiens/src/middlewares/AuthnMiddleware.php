@@ -1,18 +1,14 @@
 <?php
 
-namespace toubeelib\middlewares;
+namespace toubeelib\praticiens\middlewares;
 
 use DI\Container;
 use Monolog\Logger;
-use PHPUnit\Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Slim\Exception\HttpUnauthorizedException;
-use Slim\Routing\RouteContext;
-use toubeelib\providers\auth\AuthInvalidException;
-use toubeelib\providers\auth\AuthnProviderInterface;
+use toubeelib\praticiens\providers\auth\AuthnProviderInterface;
 
 class AuthnMiddleware implements MiddlewareInterface
 {

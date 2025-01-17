@@ -1,5 +1,5 @@
 <?php
-namespace toubeelib\core\services\praticien;
+namespace toubeelib\praticiens\core\services\praticien;
 use Psr\Container\ContainerInterface;
 
 class AuthorizationPraticienService implements AuthorizationPraticienServiceInterface{

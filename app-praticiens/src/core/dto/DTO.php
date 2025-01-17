@@ -1,11 +1,12 @@
 <?php
 
-namespace toubeelib\core\dto;
+namespace toubeelib\praticiens\core\dto;
 
+use Exception;
+use JsonSerializable;
 use Respect\Validation\Validatable;
-use Respect\Validation\Validator;
 
-abstract class DTO implements \JsonSerializable
+abstract class DTO implements JsonSerializable
 {
     public function jsonSerialize(): array
     {
@@ -18,7 +19,7 @@ abstract class DTO implements \JsonSerializable
 
 
     public function __get(string $name):mixed {
-        return property_exists($this, $name) ? $this->$name : throw new \Exception(static::class . ": Property $name does not exist");
+        return property_exists($this, $name) ? $this->$name : throw new Exception(static::class . ": Property $name does not exist");
     }
 
     public function toJSON(): string {

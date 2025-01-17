@@ -1,18 +1,14 @@
 <?php
 
-namespace toubeelib\core\dto;
+namespace toubeelib\praticiens\core\dto;
 
 use DateTimeImmutable;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use toubeelib\application\actions\AbstractAction;
-use toubeelib\core\services\rdv\ServiceRDVInvalidDataException;
-use function PHPUnit\Framework\isFalse;
+use toubeelib\praticiens\core\services\rdv\ServiceRDVInvalidDataException;
 
 class InputRdvDto extends DTO
 {
     protected string $praticienId, $specialite, $patientId, $id;
-    protected \DateTimeImmutable $dateHeure;
+    protected DateTimeImmutable $dateHeure;
 
     public function setId(string $id):void{
         $this->id=$id;
@@ -37,7 +33,7 @@ class InputRdvDto extends DTO
         return $this->patientId;
     }
 
-    public function getDateHeure(): \DateTimeImmutable
+    public function getDateHeure(): DateTimeImmutable
     {
         return $this->dateHeure;
     }
@@ -46,14 +42,14 @@ class InputRdvDto extends DTO
      * @param string $praticienId
      * @param string $specialite
      * @param string $patientId
-     * @param \DateTimeImmutable $dateHeure
+     * @param DateTimeImmutable $dateHeure
      */
     public function __construct(string $praticienId, string $patientId, string $specialite, string $dateHeure)
     {
         $this->praticienId = $praticienId;
         $this->patientId = $patientId;
         $this->specialite = $specialite;
-        $this->dateHeure = \DateTimeImmutable::createFromFormat('Y-m-d H:i', $dateHeure );
+        $this->dateHeure = DateTimeImmutable::createFromFormat('Y-m-d H:i', $dateHeure );
         if($this->dateHeure == false){
             throw new ServiceRDVInvalidDataException('format de date invalide');
         }

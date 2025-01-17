@@ -1,8 +1,10 @@
 <?php
 
-namespace toubeelib\core\services\praticien;
+namespace toubeelib\praticiens\core\services\praticien;
 
-class ServicePraticienInvalidDataException extends \Exception
+use Exception;
+
+class ServicePraticienInvalidDataException extends Exception
 {
 
 }

@@ -1,15 +1,15 @@
 <?php
-namespace toubeelib\infrastructure\repositories;
+namespace toubeelib\praticiens\infrastructure\repositories;
 
 use DI\Container;
 use Monolog\Logger;
-use toubeelib\core\dto\PraticienDTO;
-use toubeelib\core\repositoryInterfaces\RepositoryInternalException;
-use toubeelib\core\domain\entities\praticien\Praticien;
-use toubeelib\core\domain\entities\praticien\Specialite;
-use toubeelib\core\repositoryInterfaces\PraticienRepositoryInterface;
 use PDO;
-use toubeelib\core\repositoryInterfaces\RepositoryEntityNotFoundException;
+use PDOException;
+use toubeelib\praticiens\core\domain\entities\praticien\Praticien;
+use toubeelib\praticiens\core\domain\entities\praticien\Specialite;
+use toubeelib\praticiens\core\repositoryInterfaces\PraticienRepositoryInterface;
+use toubeelib\praticiens\core\repositoryInterfaces\RepositoryEntityNotFoundException;
+use toubeelib\praticiens\core\repositoryInterfaces\RepositoryInternalException;
 
 class PgPraticienRepository implements PraticienRepositoryInterface{
 
@@ -34,7 +34,7 @@ class PgPraticienRepository implements PraticienRepositoryInterface{
                 throw new RepositoryEntityNotFoundException("Specialite $id non trouvé");
             }
 
-        }catch(\PDOException $e){
+        }catch(PDOException $e){
             
             throw new RepositoryInternalException("erreur");
         }
@@ -75,7 +75,7 @@ class PgPraticienRepository implements PraticienRepositoryInterface{
                 throw new RepositoryEntityNotFoundException("Praticien $id non trouvé");
             }
 
-        }catch(\PDOException $e){
+        }catch(PDOException $e){
             throw new RepositoryInternalException('Erreure bd');
         }
     }
@@ -129,7 +129,7 @@ class PgPraticienRepository implements PraticienRepositoryInterface{
             $this->loger->info("Nombre de praticien trouvé : ". count($retour));
             return $retour;
 
-        }catch(\PDOException $e){
+        }catch(PDOException $e){
             $this->loger->error($e->getMessage());
             throw new RepositoryInternalException('erreur bd');
         }

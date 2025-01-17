@@ -1,14 +1,13 @@
 <?php
 
-namespace toubeelib\application\actions;
+namespace toubeelib\praticiens\application\actions;
 
-use DI\Container;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Respect\Validation\Exceptions\NestedValidationException;
 use Respect\Validation\Validator;
 use Slim\Exception\HttpBadRequestException;
-use toubeelib\application\renderer\JsonRenderer;
+use toubeelib\praticiens\application\renderer\JsonRenderer;
 
 class GetPatient extends AbstractAction{
 

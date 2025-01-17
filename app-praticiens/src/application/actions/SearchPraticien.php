@@ -1,17 +1,18 @@
 <?php
 
-namespace toubeelib\application\actions;
+namespace toubeelib\praticiens\application\actions;
 
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Respect\Validation\Exceptions\NestedValidationException;
 use Respect\Validation\Validator;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpInternalServerErrorException;
-use toubeelib\application\renderer\JsonRenderer;
-use toubeelib\core\domain\entities\praticien\Praticien;
-use toubeelib\core\domain\entities\praticien\Specialite;
-use toubeelib\core\dto\PraticienDTO;
+use toubeelib\praticiens\application\renderer\JsonRenderer;
+use toubeelib\praticiens\core\domain\entities\praticien\Praticien;
+use toubeelib\praticiens\core\domain\entities\praticien\Specialite;
+use toubeelib\praticiens\core\dto\PraticienDTO;
 
 class SearchPraticien extends AbstractAction
 {
@@ -41,7 +42,7 @@ class SearchPraticien extends AbstractAction
             $this->loger->info("recherche du praticien $praticienDto");
             return JsonRenderer::render($rs, 200, $praticiensCherche);
 
-        } catch(\Exception $e) {
+        } catch(Exception $e) {
             throw new HttpInternalServerErrorException($rq, $e->getMessage());
         }
     }

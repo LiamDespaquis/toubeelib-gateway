@@ -3,66 +3,24 @@
 declare(strict_types=1);
 
 use Slim\Exception\HttpNotFoundException;
-
-
-
-use toubeelib\application\actions\GetPatient;
-use toubeelib\application\actions\GetPraticien;
-use toubeelib\application\actions\GetRdvByPatient;
-
-use toubeelib\application\actions\PostSignIn;
-use toubeelib\application\actions\SearchPraticien;
-use toubeelib\middlewares\AuthnMiddleware;
-use toubeelib\middlewares\AuthzPatient;
-use toubeelib\middlewares\AuthzPraticiens;
-use toubeelib\middlewares\AuthzRDV;
+use toubeelib\praticiens\application\actions\GetDisposPraticienDate;
+use toubeelib\praticiens\application\actions\GetPraticien;
+use toubeelib\praticiens\application\actions\GetPraticienPlanning;
+use toubeelib\praticiens\application\actions\HomeAction;
+use toubeelib\praticiens\application\actions\SearchPraticien;
+use toubeelib\praticiens\middlewares\AuthnMiddleware;
+use toubeelib\praticiens\middlewares\AuthzPraticiens;
 
 return function (\Slim\App $app): \Slim\App {
 
-    $app->get('/', \toubeelib\application\actions\HomeAction::class);
-
-    $app->get('/test[/]', \toubeelib\application\actions\test::class);
-
-    //RENDEZVOUS
-    $app->post('/rdvs[/]', \toubeelib\application\actions\PostCreateRdv::class)
-        ->setName('createRdv')
-        ->add(AuthnMiddleware::class);
-    ;
-
-    $app->get('/rdvs/{id}[/]', \toubeelib\application\actions\GetRdvId::class)
-        ->setName('getRdv')
-        ->add(AuthzRDV::class)
-        ->add(AuthnMiddleware::class);
-
-    $app->delete('/rdvs/{id}[/]', \toubeelib\application\actions\DeleteRdvId::class)
-        ->setName('deleteRdvId')
-        ->add(AuthzRDV::class)
-        ->add(AuthnMiddleware::class);
-
-    $app->patch('/rdvs/{id}[/]', \toubeelib\application\actions\PatchRdv::class)
-        ->setName('patchRdv')
-        ->add(AuthzRDV::class)
-        ->add(AuthnMiddleware::class);
-
-
-    //PATIENTS
-    $app->get('/patients/{id}/rdvs[/]', GetRdvByPatient::class)
-        ->setName('rdvPatient')
-        ->add(AuthzPatient::class)
-        ->add(AuthnMiddleware::class);
-
-    $app->get("/patients/{id}[/]", GetPatient::class)
-        ->setName('getPatient')
-        ->add(AuthzPatient::class)
-        ->add(AuthnMiddleware::class);
-
+    $app->get('/', HomeAction::class);
     //PRATICIENS
 
-
-    $app->get('/praticiens/{id}/dispos[/]', \toubeelib\application\actions\GetDisposPraticienDate::class)->setName('disposPraticienDate')
+    $app->get('/praticiens/{id}/dispos[/]', GetDisposPraticienDate::class)
+        ->setName('disposPraticienDate')
         ->add(AuthnMiddleware::class);
 
-    $app->get('/praticiens/{id}/rdvs[/]', \toubeelib\application\actions\GetPraticienPlanning::class)
+    $app->get('/praticiens/{id}/rdvs[/]', GetPraticienPlanning::class)
         ->setName('planningPraticien')
         ->add(AuthzPraticiens::class)
         ->add(AuthnMiddleware::class);
@@ -72,10 +30,6 @@ return function (\Slim\App $app): \Slim\App {
 
     $app->get("/praticiens/{id}[/]", GetPraticien::class)->setName('getPraticien')
         ->add(AuthnMiddleware::class);
-
-
-    $app->post('/signin[/]', PostSignIn::class)->setName('signIn');
-
 
     $app->options('/{routes:.+}', function ($request, $response, $args) {
         return $response;

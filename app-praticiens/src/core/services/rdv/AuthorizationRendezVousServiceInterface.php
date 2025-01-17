@@ -1,5 +1,5 @@
 <?php
-namespace toubeelib\core\services\rdv;
+namespace toubeelib\praticiens\core\services\rdv;
 
 interface AuthorizationRendezVousServiceInterface
 {

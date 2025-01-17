@@ -1,6 +1,8 @@
 <?php
-namespace toubeelib\providers\auth;
+namespace toubeelib\praticiens\providers\auth;
 
 
-class AuthInvalidException extends \Exception{
+use Exception;
+
+class AuthInvalidException extends Exception{
 }

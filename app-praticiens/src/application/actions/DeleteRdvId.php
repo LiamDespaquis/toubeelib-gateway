@@ -1,15 +1,15 @@
 <?php
 
-namespace toubeelib\application\actions;
+namespace toubeelib\praticiens\application\actions;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
-use toubeelib\application\actions\AbstractAction;
-use toubeelib\application\renderer\JsonRenderer;
-use toubeelib\core\services\ServiceOperationInvalideException;
-use toubeelib\core\services\rdv\ServiceRDVInvalidDataException;
+use toubeelib\praticiens\application\actions\AbstractAction;
+use toubeelib\praticiens\application\renderer\JsonRenderer;
+use toubeelib\praticiens\core\services\rdv\ServiceRDVInvalidDataException;
+use toubeelib\praticiens\core\services\ServiceOperationInvalideException;
 
 class DeleteRdvId extends AbstractAction
 {
