@@ -10,3 +10,6 @@
 [2025-01-15 14:24] toubeelib\application\actions\SearchPraticien.INFO: recherche du praticien id : ,                 nom : ,         prenom : ,         adresse : ,         tel : ,         specialite :           []
 [2025-01-15 15:42] PgPraticienRepository.INFO: Nombre de praticien trouvé : 50 []
 [2025-01-15 15:42] toubeelib\application\actions\SearchPraticien.INFO: recherche du praticien id : ,                 nom : ,         prenom : ,         adresse : ,         tel : ,         specialite :           []
+[2025-01-17 13:00] PgPraticienRepository.ERROR: SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "praticien" does not exist LINE 12:         praticien,                  ^ []
+[2025-01-17 13:09] PgPraticienRepository.INFO: Nombre de praticien trouvé : 50 []
+[2025-01-17 13:09] toubeelib\praticiens\application\actions\SearchPraticien.INFO: recherche du praticien id : ,                 nom : ,         prenom : ,         adresse : ,         tel : ,         specialite :           []

@@ -2,7 +2,6 @@
 
 namespace toubeelib\praticiens\application\actions;
 
-
 use DI\Container;
 use Monolog\Logger;
 use Psr\Http\Message\ResponseInterface;
@@ -14,8 +13,7 @@ use toubeelib\praticiens\providers\auth\AuthnProviderInterface;
 
 abstract class AbstractAction
 {
-    protected ServiceRDVInterface $serviceRdv;
-    protected ServicePraticienInterface $servicePraticien; 
+    protected ServicePraticienInterface $servicePraticien;
     protected AuthnProviderInterface $authProvider;
     protected ServicePatientInterface $servicePatient;
     protected string $formatDate;
@@ -29,12 +27,11 @@ abstract class AbstractAction
      */
     public function __construct(Container $cont)
     {
-        $this->serviceRdv = $cont->get(ServiceRDVInterface::class);
         $this->servicePraticien = $cont->get(ServicePraticienInterface::class);
         $this->servicePatient = $cont->get(ServicePatientInterface::class);
         $this->formatDate = $cont->get('date.format');
         $this->loger = $cont->get(Logger::class)->withName(get_class($this));
-        
+
 
     }
 
@@ -42,6 +39,6 @@ abstract class AbstractAction
      * @param array<int,mixed> $args
      */
     abstract public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface ;
-    
+
 
 }
