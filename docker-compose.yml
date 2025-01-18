@@ -6,10 +6,10 @@ services:
 
   # service api.toubeelib : api pour la prise de rdv
   gateway.toubeelib:
-    # image: canals/php:8.2-cli
-    build:
-      context: build
-      dockerfile: 8.2.dockerfile
+    image: canals/php:8.2-cli
+    # build:
+    #   context: build
+    #   dockerfile: 8.2.dockerfile
     env_file: ./toubeelib.env
     container_name: gateway_toubeelib
     ports:
@@ -96,7 +96,6 @@ services:
       - toubeelib.praticiens.db
     command: php -S 0.0.0.0:80 -t /var/php/public
 
-   # service api.toubeelib : api pour la prise de rdv
   api.toubeelib.rdv:
     image: canals/php:8.2-cli
     container_name: api_toubeelib_rdv

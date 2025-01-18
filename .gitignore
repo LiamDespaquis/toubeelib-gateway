@@ -29,3 +29,4 @@ cache.properties
 composer.phar
 composer.lock
 .php-cs-fixer.cache
+logs
