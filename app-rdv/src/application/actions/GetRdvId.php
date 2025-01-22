@@ -27,11 +27,13 @@ class GetRdvId extends AbstractAction
             ]
         ];
     }
+
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
 
         $status = 200;
         try {
+            $this->loger->info("debut get");
             $rdvs = $this->serviceRdv->getRdvById($args['id']);
             $data = GetRdvId::ajouterLiensRdv($rdvs, $rq);
             $rs = JsonRenderer::render($rs, 200, $data);

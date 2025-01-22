@@ -6,7 +6,7 @@ services:
 
   # service api.toubeelib : api pour la prise de rdv
   gateway.toubeelib:
-    image: canals/php:8.2-cli
+    image: canals/php:8.2
     # build:
     #   context: build
     #   dockerfile: 8.2.dockerfile
@@ -15,13 +15,14 @@ services:
     ports:
       - '6081:80'
     volumes:
-      - ./gateway:/var/php
-    working_dir: /var/php
+      - ./gateway:/var/www
+      - ./gateway/public:/var/www/html
+    working_dir: /var/www
     networks:
       - toubeelib.net
     depends_on:
       - toubeelib.db
-    command: php -S 0.0.0.0:80 -t /var/php/public
+    # command: php -S 0.0.0.0:80 -t /var/php/public
 
   # service api.toubeelib : api pour la prise de rdv
   api.toubeelib:
@@ -78,7 +79,7 @@ services:
 
    # service api.toubeelib : api pour la prise de rdv
   api.toubeelib.praticiens:
-    image: canals/php:8.2-cli
+    image: canals/php:8.2
     # build:
     #   context: build
     #   dockerfile: 8.3-cli.Dockerfile
@@ -87,29 +88,31 @@ services:
     ports:
       - $PORT_PRATICIEN:80
     volumes:
-      - ./app-praticiens:/var/php
+      - ./app-praticiens:/var/www
+      - ./app-praticiens/public:/var/www/html
       - ./app-praticiens/sql:/var/sql
-    working_dir: /var/php
+    working_dir: /var/www
     networks:
       - toubeelib.net
     depends_on:
       - toubeelib.praticiens.db
-    command: php -S 0.0.0.0:80 -t /var/php/public
+    # command: php -S 0.0.0.0:80 -t /var/php/public
 
   api.toubeelib.rdv:
-    image: canals/php:8.2-cli
+    image: canals/php:8.2
     container_name: api_toubeelib_rdv
     ports:
       - $PORT_RDV:80
     volumes:
-      - ./app-rdv:/var/php
+      - ./app-rdv:/var/www
+      - ./app-rdv/public:/var/www/html
       - ./app-rdv/sql:/var/sql
-    working_dir: /var/php
+    working_dir: /var/www
     networks:
       - toubeelib.net
     depends_on:
       - toubeelib.rdv.db
-    command: php -S 0.0.0.0:80 -t /var/php/public
+    # command: php -S 0.0.0.0:80 -t /var/php/public
 
   toubeelib.rdv.db:
     image: 'postgres:latest'

@@ -3,6 +3,7 @@
 namespace toubeelib\praticiens\application\actions;
 
 use Exception;
+use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Respect\Validation\Exceptions\NestedValidationException;

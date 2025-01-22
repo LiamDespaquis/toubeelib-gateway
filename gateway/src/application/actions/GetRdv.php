@@ -7,14 +7,16 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\ServerException;
 use Psr\Http\Message\ResponseInterface;
-use Slim\Exception\HttpBadRequestException;
+use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Exception\HttpForbiddenException;
 use Slim\Exception\HttpUnauthorizedException;
-use Psr\Http\Message\ServerRequestInterface;
+use Slim\Exception\HttpBadRequestException;
+use Psr\Log\LoggerInterface;
 use Slim\Exception\HttpInternalServerErrorException;
+use toubeelibgateway\application\actions\AbstractAction;
 
-class GetPraticienById extends AbstractAction
+class GetRdv extends AbstractAction
 {
     private string $url;
     public function __construct(Client $client, string $url)
@@ -24,13 +26,15 @@ class GetPraticienById extends AbstractAction
     }
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
-
         try {
             return $responseToubeelib = $this->client->request(
                 'GET',
-                $this->url .'/praticiens'. $args["route"],
-                [ "timeout" => 5 ]
+                $this->url. '/rdvs' . $args['route'],
+                [
+                    'timeout' => 5,
+                ]
             );
+            return $rs;
         } catch (ConnectException | ServerException $e) {
             throw new HttpInternalServerErrorException($rq, $e->getMessage());
         } catch (ClientException $e) {

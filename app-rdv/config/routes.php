@@ -15,6 +15,9 @@ return function (\Slim\App $app): \Slim\App {
 
     //RENDEZVOUS
     $app->group('/rdvs', function (RouteCollectorProxy $group) {
+        $group->get('[/]', function ($request, $response, $args) {
+            return $response->withJson(['message' => 'Hello World']);
+        })->setName('getRdvs');
         $group->post('[/]', PostCreateRdv::class)->setName('createRdv');
         $group->get('/{id}[/]', GetRdvId::class)->setName('getRdv');
         $group->delete('/{id}[/]', DeleteRdvId::class)->setName('deleteRdvId');
