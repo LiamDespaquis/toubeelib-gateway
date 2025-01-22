@@ -32,6 +32,7 @@ class GetSpecialiteAPI extends AbstractAction
                 $this->url .'/specialites'. $args["route"],
                 [ "timeout" => 5 ]
             );
+
         } catch (ConnectException | ServerException $e) {
             return $e->getResponse();
             /*throw new HttpInternalServerErrorException($rq, $e->getMessage());*/

@@ -12,14 +12,14 @@ class GetSpecialite extends AbstractAction
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         if(!isset($args['id'])) {
-            return JsonRenderer::render($rs, 400, ['error' => 'missing id']);
+            return JsonRenderer::render($rs, 400, ['error' => 'id manquant']);
         }
         $id = $args['id'];
         try {
             $specialite = $this->servicePraticien->getSpecialiteById($id);
             return JsonRenderer::render($rs, 200, $specialite);
         } catch(ServicePraticienInvalidDataException $e) {
-            return JsonRenderer::render($rs, 400, ['error' => 'missing id']);
+            return JsonRenderer::render($rs, 400, ['error' => 'Mauvais id']);
         }
 
     }
