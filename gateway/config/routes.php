@@ -6,8 +6,9 @@ use Psr\Http\Message\ResponseInterface;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Routing\RouteCollectorProxy;
 use toubeelibgateway\application\actions\GetPraticien;
-use toubeelibgateway\application\actions\GetPraticienById;
+use toubeelibgateway\application\actions\GetPraticienApi;
 use toubeelibgateway\application\actions\GetRdv;
+use toubeelibgateway\application\actions\GetSpecialiteAPI;
 
 return function (\Slim\App $app): \Slim\App {
 
@@ -20,14 +21,19 @@ return function (\Slim\App $app): \Slim\App {
     $app->group(
         '/praticiens',
         function (RouteCollectorProxy $group) {
-            $group->get('{route:.*}', GetPraticienById::class);
+            $group->get('{route:.*}', GetPraticienApi::class);
         }
     );
+    $app->group('/specialites', function (RouteCollectorProxy $group) {
+
+        $group->get('{route:.*}', GetSpecialiteAPI::class);
+    });
 
     $app->group(
         '/rdvs',
         function (RouteCollectorProxy $group) {
             $group->get('{route:.*}', GetRdv::class);
+            $group->post('{route:.*}', GetRdv::class);
         }
     );
 

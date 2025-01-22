@@ -7,6 +7,7 @@ use Slim\Routing\RouteCollectorProxy;
 use toubeelib\praticiens\application\actions\GetDisposPraticienDate;
 use toubeelib\praticiens\application\actions\GetPraticien;
 use toubeelib\praticiens\application\actions\GetPraticienPlanning;
+use toubeelib\praticiens\application\actions\GetSpecialite;
 use toubeelib\praticiens\application\actions\HomeAction;
 use toubeelib\praticiens\application\actions\SearchPraticien;
 use toubeelib\praticiens\middlewares\AuthnMiddleware;
@@ -23,6 +24,8 @@ return function (\Slim\App $app): \Slim\App {
     });
     $app->get('/praticiens/{id}/dispos[/]', GetDisposPraticienDate::class)
         ->setName('disposPraticienDate');
+
+    $app->get('/specialites/{id}[/]', GetSpecialite::class);
 
     /*$app->get('/praticiens/{id}/rdvs[/]', GetPraticienPlanning::class)*/
     /*    ->setName('planningPraticien');*/

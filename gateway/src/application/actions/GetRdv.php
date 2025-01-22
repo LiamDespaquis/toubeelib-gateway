@@ -28,22 +28,28 @@ class GetRdv extends AbstractAction
     {
         try {
             return $responseToubeelib = $this->client->request(
-                'GET',
+                $rq->getMethod(),
                 $this->url. '/rdvs' . $args['route'],
                 [
                     'timeout' => 5,
+                    'headers' => [
+                        'accept' => 'application/json',
+                    ],
+                        'json' => $rq->getParsedBody(),
                 ]
             );
             return $rs;
         } catch (ConnectException | ServerException $e) {
-            throw new HttpInternalServerErrorException($rq, $e->getMessage());
+            return $e->getResponse();
+            /*throw new HttpInternalServerErrorException($rq, $e->getMessage());*/
         } catch (ClientException $e) {
-            match($e->getCode()) {
-                400 => throw new HttpBadRequestException($rq, " … "),
-                401 => throw new HttpUnauthorizedException($rq, " … "),
-                403 => throw new HttpForbiddenException($rq, " … "),
-                404 => throw new HttpNotFoundException($rq, " … ")
-            };
+            return $e->getResponse();
+            /*match($e->getCode()) {*/
+            /*    400 => throw new HttpBadRequestException($rq, $e->getMessage()),*/
+            /*    401 => throw new HttpUnauthorizedException($rq, $e->getMessage),*/
+            /*    403 => throw new HttpForbiddenException($rq, $e->getMessage),*/
+            /*    404 => throw new HttpNotFoundException($rq, $e->getMessage)*/
+            /*};*/
         }
     }
 }

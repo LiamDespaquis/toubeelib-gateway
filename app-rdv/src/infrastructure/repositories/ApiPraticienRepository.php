@@ -23,13 +23,23 @@ class ApiPraticienRepository implements PraticienRepositoryInterface
     public function __construct(LoggerInterface $logger)
     {
         //Uri base et client pas fait par l'injection de dépendance car impossible de la faire fonctionner pour cette classe
-        $this->uriBase = 'http://gateway.toubeelib/praticiens/' ;
+        $this->uriBase = 'http://gateway.toubeelib/' ;
         $this->client = new Client(['base_uri' => $this->uriBase]);
         $this->logger = $logger;
     }
 
     public function getSpecialiteById(string $id): Specialite
     {
+        try {
+            $resSpecialite = $this->client->request('GET', 'specialites/'.$id);
+            $objSpecialite = json_decode($resSpecialite->getBody()->getContents());
+            return new Specialite($objSpecialite->id, $objSpecialite->label, $objSpecialite->description);
+        } catch (ConnectException | ServerException $e) {
+            throw new RepositoryInternalException($e->getMessage());
+        } catch(\Exception $e) {
+            $this->logger->error($e->getTraceAsString());
+            throw new RepositoryEntityNotFoundException();
+        }
 
     }
 
@@ -40,7 +50,7 @@ class ApiPraticienRepository implements PraticienRepositoryInterface
     public function getPraticienById(string $id): Praticien
     {
         try {
-            $resPraticien = $this->client->request('GET', $id, );
+            $resPraticien = $this->client->request('GET', "praticiens/" . $id, );
             $objPraticien = json_decode($resPraticien->getBody()->getContents());
             $praticien = new Praticien($objPraticien->nom, $objPraticien->prenom, $objPraticien->adresse, $objPraticien->tel);
             $praticien->setId($objPraticien->id);

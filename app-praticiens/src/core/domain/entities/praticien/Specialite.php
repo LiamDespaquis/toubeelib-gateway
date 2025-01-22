@@ -7,7 +7,6 @@ use toubeelib\praticiens\core\dto\SpecialiteDTO;
 
 class Specialite extends Entity
 {
-
     protected string $label;
     protected string $description;
 

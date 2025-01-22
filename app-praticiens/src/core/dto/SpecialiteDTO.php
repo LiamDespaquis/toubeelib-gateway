@@ -1,6 +1,6 @@
 <?php
 
-namespace toubeelib\praticiens\praticiens\core\dto;
+namespace toubeelib\praticiens\core\dto;
 
 use toubeelib\praticiens\core\dto\DTO;
 
@@ -10,7 +10,8 @@ class SpecialiteDTO extends DTO
     protected string $label;
     protected string $description;
 
-    public function getLabel():string{
+    public function getLabel(): string
+    {
         return $this->label;
     }
     public function __construct(string $ID, string $label, string $description)

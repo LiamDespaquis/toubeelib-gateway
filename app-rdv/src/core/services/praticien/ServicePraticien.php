@@ -48,14 +48,15 @@ class ServicePraticien implements ServicePraticienInterface
             $specialite = $this->praticienRepository->getSpecialiteById($id);
             return $specialite->toDTO();
         } catch(RepositoryEntityNotFoundException $e) {
-            throw new ServicePraticienInvalidDataException('invalid Specialite ID');
+
+            throw new ServicePraticienInvalidDataException('invalid Specialite ID ' . $e->getTraceAsString());
         }
     }
 
     public function searchPraticien(PraticienDTO $p): array
     {
-        $pratSearch= Praticien::fromDTO($p);
-        return array_map(function(Praticien $p){
+        $pratSearch = Praticien::fromDTO($p);
+        return array_map(function (Praticien $p) {
             return new PraticienDTO($p);
         }, $this->praticienRepository->searchPraticiens($pratSearch));
     }
