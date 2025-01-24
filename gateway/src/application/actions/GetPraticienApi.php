@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\Exception\TransferException;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
@@ -13,6 +14,7 @@ use Slim\Exception\HttpForbiddenException;
 use Slim\Exception\HttpUnauthorizedException;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpInternalServerErrorException;
+use toubeelibgateway\application\renderer\JsonRenderer;
 
 class GetPraticienApi extends AbstractAction
 {
@@ -24,13 +26,20 @@ class GetPraticienApi extends AbstractAction
     }
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
+        $uri = $args["route"];
 
         try {
-            return $responseToubeelib = $this->client->request(
+            $responseToubeelib = $this->client->request(
                 'GET',
-                $this->url .'/praticiens'. $args["route"],
-                [ "timeout" => 5 ]
+                $this->url .'/praticiens'. $uri,
+                [
+                    "timeout" => 8 ,
+
+                ]
             );
+            $body = $responseToubeelib->getBody();
+            $status = $responseToubeelib->getStatusCode();
+            return JsonRenderer::render($rs, $status)->withBody($body);
         } catch (ConnectException | ServerException $e) {
             return $e->getResponse();
             
