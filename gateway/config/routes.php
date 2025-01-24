@@ -39,5 +39,13 @@ return function (\Slim\App $app): \Slim\App {
         }
     );
 
+    $app->group(
+        '/auth', 
+        function (RouteCollectorProxy $group) {
+            $group->get('{route:.*}', GetAuthAPI::class);
+            $group->post('{route:.*}', GetAuthApi::class);
+        }
+    );
+
     return $app;
 };

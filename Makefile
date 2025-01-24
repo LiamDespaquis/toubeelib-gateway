@@ -1,6 +1,7 @@
 phpdocker=api_toubeelib_gt
 phpdockerPraticien=api_toubeelib_praticien
 phpdockerRdv=api_toubeelib_rdv
+phpdockerAuth=api_toubeelib_auth
 install: 
 	make up
 	make composer
@@ -12,6 +13,7 @@ up:
 composer:
 	docker exec -it $(phpdocker) composer install
 	docker exec -it gateway_toubeelib composer install
+	docker compose run --rm api.toubeelib.rdv composer install
 genereDb:
 	docker exec -it $(phpdocker) php ./src/infrastructure/genereAuthDb.php
 	docker exec -it $(phpdocker) php ./src/infrastructure/genereDB.php
@@ -19,6 +21,8 @@ genereDbPraticien:
 	docker exec -it $(phpdockerPraticien) php ./src/infrastructure/genereDB.php
 genereDbRdv:
 	docker exec -it $(phpdockerRdv) php ./src/infrastructure/genereDB.php
+genererDbAuth: 
+	docker exec -it $(phpdockerAuth) php ./src/infrastructure/genereDB.php
 watchLogs:
 	watch -n 2 tail app/var/logs
 confFiles:
