@@ -1,0 +1,20 @@
+meta {
+  name: signin microservice praticien
+  type: http
+  seq: 6
+}
+
+post {
+  url: http://localhost:6084/signin
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    // Praticien
+    // "id":"2c32033b-1f4d-315e-b285-3e6ea3b30381",
+    "email":"tbaron@traore.org",
+    "password": "tbaron"
+  }
+}

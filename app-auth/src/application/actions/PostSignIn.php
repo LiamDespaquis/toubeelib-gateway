@@ -21,7 +21,7 @@ class PostSignIn extends AbstractAction
     public function __construct(Container $co)
     {
         parent::__construct($co);
-        $this->authProvider = $co->get(AuthnProviderInterface::class);
+        
     }
 
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
@@ -46,8 +46,8 @@ class PostSignIn extends AbstractAction
             return $rs;
         } catch (NestedValidationException $e) {
             throw new HttpBadRequestException($rq, $e->getMessage());
-        } catch (ServiceRDVInvalidDataException $e) {
-            throw new HttpBadRequestException($rq, $e->getMessage());
+       // } catch (ServiceRDVInvalidDataException $e) {
+            //throw new HttpBadRequestException($rq, $e->getMessage());
         } catch (\Exception $e) {
             throw new HttpInternalServerErrorException($rq, $e->getMessage());
 //            throw new HttpInternalServerErrorException($rq, "Erreur serveur");
