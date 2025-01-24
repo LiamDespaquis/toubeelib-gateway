@@ -1,8 +1,17 @@
-networks:
-  toubeelib.net:
-    driver: bridge
 services:
 
+  queue:
+    image: rabbitmq:4-management
+    ports:
+      - 5999:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=toto
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 8s
+      timeout: 30s
+      retries: 3
 
   # service api.toubeelib : api pour la prise de rdv
   gateway.toubeelib:
@@ -18,10 +27,9 @@ services:
       - ./gateway:/var/www
       - ./gateway/public:/var/www/html
     working_dir: /var/www
-    networks:
-      - toubeelib.net
     depends_on:
-      - toubeelib.db
+      queue:
+        condition: service_healthy
     # command: php -S 0.0.0.0:80 -t /var/php/public
 
   # service api.toubeelib : api pour la prise de rdv
@@ -38,8 +46,6 @@ services:
       - ./app:/var/php
       - ./sql:/var/sql
     working_dir: /var/php
-    networks:
-      - toubeelib.net
     depends_on:
       - toubeelib.db
     command: php -S 0.0.0.0:80 -t /var/php/public
@@ -50,8 +56,6 @@ services:
     env_file: ./toubeelibauthdb.env
     ports:
       - $PORT_AUTH_BD:5432
-    networks:
-      - toubeelib.net
     volumes:
       - ./app/sql:/var/sql'
 
@@ -60,8 +64,6 @@ services:
     env_file: ./toubeelibdb.env
     ports:
       - $PORT_DB:5432
-    networks:
-      - toubeelib.net
     volumes:
       - ./app/sql:/var/sql'
   #
@@ -71,8 +73,6 @@ services:
     image: adminer
     ports:
       - $PORT_ADMINER:8080
-    networks:
-      - toubeelib.net
 
 
 # micro service praticien 
@@ -92,8 +92,6 @@ services:
       - ./app-praticiens/public:/var/www/html
       - ./app-praticiens/sql:/var/sql
     working_dir: /var/www
-    networks:
-      - toubeelib.net
     depends_on:
       - toubeelib.praticiens.db
     # command: php -S 0.0.0.0:80 -t /var/php/public
@@ -108,8 +106,6 @@ services:
       - ./app-rdv/public:/var/www/html
       - ./app-rdv/sql:/var/sql
     working_dir: /var/www
-    networks:
-      - toubeelib.net
     depends_on:
       - toubeelib.rdv.db
     # command: php -S 0.0.0.0:80 -t /var/php/public
@@ -120,8 +116,6 @@ services:
     container_name: toubeelib.rdv.db
     ports:
       - $PORT_RDV_BD:5432
-    networks:
-      - toubeelib.net
     volumes:
       - ./app/sql:/var/sql'
 
@@ -131,8 +125,6 @@ services:
     container_name: toubeelib.praticiens.db
     ports:
       - $PORT_PRATICIEN_BD:5432
-    networks:
-      - toubeelib.net
     volumes:
       - ./app/sql:/var/sql'
 
@@ -146,7 +138,5 @@ services:
       - ./app-auth/public:/var/www/html
       - ./app-auth/sql:/var/sql
     working_dir: /var/www
-    networks:
-      - toubeelib.net
     depends_on:
       - toubeelib.auth.db

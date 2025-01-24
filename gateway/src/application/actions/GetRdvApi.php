@@ -16,7 +16,7 @@ use Psr\Log\LoggerInterface;
 use Slim\Exception\HttpInternalServerErrorException;
 use toubeelibgateway\application\actions\AbstractAction;
 
-class GetRdv extends AbstractAction
+class GetRdvApi extends AbstractAction
 {
     private string $url;
     public function __construct(Client $client, string $url)
@@ -27,15 +27,17 @@ class GetRdv extends AbstractAction
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         try {
+            $uri = $rq->getUri()->getPath();
             return $responseToubeelib = $this->client->request(
                 $rq->getMethod(),
-                $this->url. '/rdvs' . $args['route'],
+                $this->url. $uri,
                 [
                     'timeout' => 5,
                     'headers' => [
                         'accept' => 'application/json',
                     ],
                         'json' => $rq->getParsedBody(),
+
                 ]
             );
             return $rs;

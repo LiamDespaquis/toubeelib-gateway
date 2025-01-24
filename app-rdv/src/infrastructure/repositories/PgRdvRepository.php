@@ -6,6 +6,7 @@ use DI\Container;
 use Monolog\Logger;
 use PDO;
 use toubeelib\rdv\core\domain\entities\rdv\RendezVous;
+use toubeelib\rdv\core\repositoryInterfaces\PraticienRepositoryInterface;
 use toubeelib\rdv\core\repositoryInterfaces\RdvRepositoryInterface;
 use toubeelib\rdv\core\repositoryInterfaces\RepositoryEntityNotFoundException;
 use toubeelib\rdv\core\repositoryInterfaces\RepositoryInternalException;
@@ -14,11 +15,13 @@ class PgRdvRepository implements RdvRepositoryInterface
 {
     protected PDO $pdo;
     protected Logger $loger;
+    protected PraticienRepositoryInterface $repositoryPraticien;
 
     public function __construct(Container $cont)
     {
         $this->pdo = $cont->get('pdo.commun');
         $this->loger = $cont->get(Logger::class)->withName('PgRdvRepository');
+        $this->repositoryPraticien = $cont->get(PraticienRepositoryInterface::class);
 
     }
 
@@ -43,7 +46,6 @@ class PgRdvRepository implements RdvRepositoryInterface
             $statement = $this->pdo->prepare($query);
             $statement->execute(['id' => $id]);
             $rdv = $statement->fetch();
-            // var_dump($rdv);
 
             if($rdv) {
                 $retour = new RendezVous(
@@ -101,17 +103,23 @@ class PgRdvRepository implements RdvRepositoryInterface
     {
         try {
             $query = "select 
-            rdv.id as id,rdv.patientid as patientid,rdv.praticienid as praticienid,
-            rdv.date as date, praticien.specialite as specialite 
-            from rdv,praticien,specialite where rdv.praticienId=praticien.id and praticien.specialite=specialite.id and praticien.id= :id;";
+            rdv.id as id,
+            rdv.patientid as patientid,
+            rdv.praticienid as praticienid,
+            rdv.date as date
+            from rdv
+            where 
+            rdv.praticienId= :id;";
             $rdvs = $this->pdo->prepare($query);
             $rdvs->execute(['id' => $id]);
             $result = $rdvs->fetchAll();
 
+            $praticien = $this->repositoryPraticien->getPraticienById($id);
+
             if($result) {
                 $retour = [];
                 foreach($result as $r) {
-                    $rdv = new RendezVous($r['praticienid'], $r['patientid'], $r['specialite'], new \DateTimeImmutable($r['date']));
+                    $rdv = new RendezVous($r['praticienid'], $r['patientid'], $praticien->specialite->label, new \DateTimeImmutable($r['date']));
                     $rdv->setId($r['id']);
                     $retour[] = $rdv;
                 }

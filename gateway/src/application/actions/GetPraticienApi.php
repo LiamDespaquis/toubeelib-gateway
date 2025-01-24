@@ -33,7 +33,7 @@ class GetPraticienApi extends AbstractAction
                 'GET',
                 $this->url .'/praticiens'. $uri,
                 [
-                    "timeout" => 8 ,
+                    "timeout" => 5 ,
 
                 ]
             );
