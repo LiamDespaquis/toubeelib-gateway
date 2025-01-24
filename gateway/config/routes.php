@@ -7,7 +7,7 @@ use Slim\Exception\HttpNotFoundException;
 use Slim\Routing\RouteCollectorProxy;
 use toubeelibgateway\application\actions\GetPraticien;
 use toubeelibgateway\application\actions\GetPraticienApi;
-use toubeelibgateway\application\actions\GetRdv;
+use toubeelibgateway\application\actions\GetRdvApi;
 use toubeelibgateway\application\actions\GetSpecialiteAPI;
 
 return function (\Slim\App $app): \Slim\App {
@@ -21,7 +21,8 @@ return function (\Slim\App $app): \Slim\App {
     $app->group(
         '/praticiens',
         function (RouteCollectorProxy $group) {
-            $group->get('{route:.*}/rdvs', GetRdv::class);
+            $group->get('{route:.*}/rdvs', GetRdvApi::class);
+            $group->get('{route:.*}/dispos', GetRdvApi::class);
             $group->get('{route:.*}', GetPraticienApi::class);
         }
     );
@@ -33,8 +34,8 @@ return function (\Slim\App $app): \Slim\App {
     $app->group(
         '/rdvs',
         function (RouteCollectorProxy $group) {
-            $group->get('{route:.*}', GetRdv::class);
-            $group->post('{route:.*}', GetRdv::class);
+            $group->get('{route:.*}', GetRdvApi::class);
+            $group->post('{route:.*}', GetRdvApi::class);
         }
     );
 
