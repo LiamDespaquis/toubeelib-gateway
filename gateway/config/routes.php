@@ -21,6 +21,7 @@ return function (\Slim\App $app): \Slim\App {
     $app->group(
         '/praticiens',
         function (RouteCollectorProxy $group) {
+            $group->get('{route:.*}/rdvs', GetRdv::class);
             $group->get('{route:.*}', GetPraticienApi::class);
         }
     );

@@ -144,15 +144,15 @@ class ServiceRDV implements ServiceRDVInterface
         return $results /*!= null ? $results : "Pas de disponibilité pour ce praticien"*/;
     }
 
-    public function getPlanningPraticien(string $idPraticien, ?string $test_start_Date, ?string $test_end_Date): array
+    public function getPlanningPraticien(string $idPraticien, ?DateTimeImmutable $inputStartDate, ?DateTimeImmutable $inputEndDate): array
     {
         $results = [];
-        $startDate = $test_start_Date != null
-            ? (new \DateTimeImmutable($test_start_Date))->setTime(ServiceRDV::HDEBUT[0], ServiceRDV::HDEBUT[1])
+        $startDate = $inputStartDate != null
+            ? $inputStartDate->setTime(ServiceRDV::HDEBUT[0], ServiceRDV::HDEBUT[1])
             : (new \DateTimeImmutable('now'))->setTime(ServiceRDV::HDEBUT[0], ServiceRDV::HDEBUT[1]);
 
-        $endDate = $test_end_Date != null && $test_end_Date != $test_start_Date
-            ? (new \DateTimeImmutable($test_end_Date))->setTime(ServiceRDV::HDEBUT[0], ServiceRDV::HDEBUT[1])
+        $endDate = $inputEndDate != null && $inputEndDate != $inputStartDate
+            ? $inputEndDate->setTime(ServiceRDV::HDEBUT[0], ServiceRDV::HDEBUT[1])
             : (new \DateTimeImmutable('now'))->setTime(ServiceRDV::HDEBUT[0], ServiceRDV::HDEBUT[1])->add(new DateInterval('P31D'));
 
         $listeRDV = $this->rdvRepository->getRdvByPraticien($idPraticien);

@@ -27,15 +27,17 @@ class GetRdv extends AbstractAction
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         try {
+            $uri = $rq->getUri()->getPath();
             return $responseToubeelib = $this->client->request(
                 $rq->getMethod(),
-                $this->url. '/rdvs' . $args['route'],
+                $this->url. $uri,
                 [
                     'timeout' => 5,
                     'headers' => [
                         'accept' => 'application/json',
                     ],
                         'json' => $rq->getParsedBody(),
+
                 ]
             );
             return $rs;

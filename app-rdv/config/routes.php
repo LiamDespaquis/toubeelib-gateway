@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Slim\Exception\HttpNotFoundException;
 use Slim\Routing\RouteCollectorProxy;
+use toubeelib\rdv\application\actions\GetPraticienPlanning;
 use toubeelib\rdv\application\actions\PatchRdv;
 use toubeelib\rdv\application\actions\DeleteRdvId;
 use toubeelib\rdv\application\actions\GetRdvId;
@@ -24,6 +25,7 @@ return function (\Slim\App $app): \Slim\App {
         $group->patch('/{id}[/]', PatchRdv::class)->setName('patchRdv');
     });
 
+    $app->get('/praticiens/{id}/rdvs[/]', GetPraticienPlanning::class)->setName('getRdvByPraticien');
     $app->options('/{routes:.+}', function ($request, $response, $args) {
         return $response;
     });
