@@ -49,7 +49,7 @@ services:
     image: 'postgres:latest'
     env_file: ./toubeelibauthdb.env
     ports:
-      - $PORT_AUTH:5432
+      - $PORT_AUTH_BD:5432
     networks:
       - toubeelib.net
     volumes:
@@ -135,3 +135,18 @@ services:
       - toubeelib.net
     volumes:
       - ./app/sql:/var/sql'
+
+  api.toubeelib.auth:
+    image: canals/php:8.2
+    container_name: api_toubeelib_auth
+    ports:
+      - $PORT_AUTH:80
+    volumes:
+      - ./app-auth:/var/www
+      - ./app-auth/public:/var/www/html
+      - ./app-auth/sql:/var/sql
+    working_dir: /var/www
+    networks:
+      - toubeelib.net
+    depends_on:
+      - toubeelib.auth.db

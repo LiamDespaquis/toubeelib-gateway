@@ -14,7 +14,7 @@ use Slim\Exception\HttpUnauthorizedException;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpInternalServerErrorException;
 
-class GetPraticienApi extends AbstractAction
+class GetAuthApi extends AbstractAction
 {
     private string $url;
     public function __construct(Client $client, string $url)
@@ -28,7 +28,7 @@ class GetPraticienApi extends AbstractAction
         try {
             return $responseToubeelib = $this->client->request(
                 'GET',
-                $this->url .'/praticiens'. $args["route"],
+                $this->url .'/auth'. $args["route"],
                 [ "timeout" => 5 ]
             );
         } catch (ConnectException | ServerException $e) {
