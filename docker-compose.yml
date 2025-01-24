@@ -138,7 +138,5 @@ services:
       - ./app-auth/public:/var/www/html
       - ./app-auth/sql:/var/sql
     working_dir: /var/www
-    networks:
-      - toubeelib.net
     depends_on:
       - toubeelib.auth.db
