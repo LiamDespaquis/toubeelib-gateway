@@ -15,24 +15,15 @@ use toubeelib\core\services\patient\ServicePatientInterface;
 
 abstract class AbstractAction
 {
-    protected ServiceRDVInterface $serviceRdv;
-    protected ServicePraticienInterface $servicePraticien; 
     protected AuthnProviderInterface $authProvider;
-    protected ServicePatientInterface $servicePatient;
     protected string $formatDate;
     protected Container $cont;
 
     protected Logger $loger;
-    /**
-     * @param ServiceRDVInterface $srdv
-     * @param ServicePraticienInterface $sprt
-     * @param string $formatDate
-     */
+
     public function __construct(Container $cont)
     {
-        $this->serviceRdv = $cont->get(ServiceRDVInterface::class);
-        $this->servicePraticien = $cont->get(ServicePraticienInterface::class);
-        $this->servicePatient = $cont->get(ServicePatientInterface::class);
+        $this->authProvider = $cont->get(AuthnProviderInterface::class);
         $this->formatDate = $cont->get('date.format');
         $this->loger = $cont->get(Logger::class)->withName(get_class($this));
         
