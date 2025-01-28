@@ -8,18 +8,10 @@ use toubeelib\rdv\core\repositoryInterfaces\AuthRepositoryInterface;
 use toubeelib\rdv\core\repositoryInterfaces\PatientRepositoryInterface;
 use toubeelib\rdv\core\repositoryInterfaces\PraticienRepositoryInterface;
 use toubeelib\rdv\core\repositoryInterfaces\RdvRepositoryInterface;
-use toubeelib\rdv\core\services\AuthorizationPatientService;
-use toubeelib\rdv\core\services\AuthorizationPatientServiceInterface;
-use toubeelib\rdv\core\services\ServiceAuth;
-use toubeelib\rdv\core\services\ServiceAuthInterface;
 use toubeelib\rdv\core\services\patient\ServicePatient;
 use toubeelib\rdv\core\services\patient\ServicePatientInterface;
-use toubeelib\rdv\core\services\praticien\AuthorizationPraticienService;
-use toubeelib\rdv\core\services\praticien\AuthorizationPraticienServiceInterface;
 use toubeelib\rdv\core\services\praticien\ServicePraticien;
 use toubeelib\rdv\core\services\praticien\ServicePraticienInterface;
-use toubeelib\rdv\core\services\rdv\AuthorizationRendezVousService;
-use toubeelib\rdv\core\services\rdv\AuthorizationRendezVousServiceInterface;
 use toubeelib\rdv\core\services\rdv\ServiceRDV;
 use toubeelib\rdv\core\services\rdv\ServiceRDVInterface;
 use toubeelib\rdv\infrastructure\notification\NotificationInfraInterface;
@@ -27,16 +19,7 @@ use toubeelib\rdv\infrastructure\notification\NotificationRabbitMq;
 use toubeelib\rdv\infrastructure\repositories\ApiPraticienRepository;
 use toubeelib\rdv\infrastructure\repositories\PgAuthRepository;
 use toubeelib\rdv\infrastructure\repositories\PgPatientRepository;
-use toubeelib\rdv\infrastructure\repositories\PgPraticienRepository;
 use toubeelib\rdv\infrastructure\repositories\PgRdvRepository;
-use toubeelib\rdv\middlewares\AuthnMiddleware;
-use toubeelib\rdv\middlewares\AuthzPatient;
-use toubeelib\rdv\middlewares\AuthzPraticiens;
-use toubeelib\rdv\middlewares\AuthzRDV;
-use toubeelib\rdv\middlewares\CorsMiddleware;
-use toubeelib\rdv\providers\auth\AuthnProviderInterface;
-use toubeelib\rdv\providers\auth\JWTAuthnProvider;
-use toubeelib\rdv\providers\auth\JWTManager;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Formatter\LineFormatter;
@@ -61,16 +44,15 @@ return [
     ServiceRDVInterface::class => DI\autowire(ServiceRDV::class),
     ServicePatientInterface::class => DI\autowire(ServicePatient::class),
 
-
     AMQPStreamConnection::class => function (ContainerInterface $c) {
-        $config = parse_ini_file($c->get('rabbitmq.config'));
         return new AMQPStreamConnection(
-            $config['host'],
-            $config['port'],
-            $config['user'],
-            $config['password'],
+            $c->get('amqp.host'),
+            $c->get('amqp.port'),
+            $c->get('amqp.user'),
+            $c->get('amqp.password')
         );
     },
+
 
     NotificationRabbitMq::class => function (ContainerInterface $c) {
         return new NotificationRabbitMq(

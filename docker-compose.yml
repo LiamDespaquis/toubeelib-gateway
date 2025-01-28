@@ -13,6 +13,20 @@ services:
       timeout: 30s
       retries: 3
 
+  mailer:
+    image: canals/php:8.2
+    container_name: mailer.toubeelib
+    volumes:
+      - ./mailer:/var/www/html
+    working_dir: /var/www/html
+    env_file: 
+      - ./mailer.env
+      - ./amqp.env
+    command: php mailer.php
+    depends_on:
+      queue:
+        condition: service_healthy
+
   # service api.toubeelib : api pour la prise de rdv
   gateway.toubeelib:
     image: canals/php:8.2
@@ -38,7 +52,8 @@ services:
     # build:
     #   context: build
     #   dockerfile: 8.3-cli.Dockerfile
-    env_file: ./toubeelib.env
+    env_file:
+      - path: ./toubeelib.env
     container_name: api_toubeelib_gt
     ports:
       - $PORT_API:80
@@ -99,6 +114,9 @@ services:
   api.toubeelib.rdv:
     image: canals/php:8.2
     container_name: api_toubeelib_rdv
+    env_file:
+      - ./mailer.env
+      - ./amqp.env
     ports:
       - $PORT_RDV:80
     volumes:
@@ -112,7 +130,8 @@ services:
 
   toubeelib.rdv.db:
     image: 'postgres:latest'
-    env_file: ./toubeelibdb.env
+    env_file:
+      - ./toubeelibdb.env
     container_name: toubeelib.rdv.db
     ports:
       - $PORT_RDV_BD:5432
@@ -140,3 +159,11 @@ services:
     working_dir: /var/www
     depends_on:
       - toubeelib.auth.db
+
+  mailcatcher:
+    build:
+      context: ./build
+      dockerfile: mailcatcher.Dockerfile
+    ports:
+      - $PORT_MAILCATCHER:1080
+      - 1025:1025

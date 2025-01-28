@@ -76,8 +76,9 @@ class ServiceRDV implements ServiceRDVInterface
             throw new ServiceRDVInvalidDataException("Création de rdv impossible : " . $e->getMessage());
         }
         $this->rdvRepository->addRdv($id, $rdv);
-        $this->notificationInfra->notifEventRdv($rdv, 'CREATE');
-        return $rdv->toDTO($praticien);
+        $rdvDto =  $rdv->toDTO($praticien);
+        $this->notificationInfra->notifEventRdv($rdvDto, 'CREATE RDV');
+        return $rdvDto;
     }
 
     // TODO: transferer methode a ServicePraticien

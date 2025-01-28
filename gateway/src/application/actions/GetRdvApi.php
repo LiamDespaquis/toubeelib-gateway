@@ -24,6 +24,7 @@ class GetRdvApi extends AbstractAction
         $this->client = $client;
         $this->url = $url;
     }
+
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         try {
