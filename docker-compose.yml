@@ -99,6 +99,7 @@ services:
   api.toubeelib.rdv:
     image: canals/php:8.2
     container_name: api_toubeelib_rdv
+    env_file: ./toubeelib.env
     ports:
       - $PORT_RDV:80
     volumes:
@@ -127,6 +128,7 @@ services:
       - $PORT_PRATICIEN_BD:5432
     volumes:
       - ./app/sql:/var/sql'
+    
 
   api.toubeelib.auth:
     image: canals/php:8.2
@@ -138,5 +140,6 @@ services:
       - ./app-auth/public:/var/www/html
       - ./app-auth/sql:/var/sql
     working_dir: /var/www
+    env_file: ./toubeelib.env
     depends_on:
       - toubeelib.auth.db

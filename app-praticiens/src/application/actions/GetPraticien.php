@@ -16,7 +16,6 @@ class GetPraticien extends AbstractAction
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         $idval = Validator::key('id', Validator::Uuid());
-
         try {
             $idval->assert($args);
 

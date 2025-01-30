@@ -28,6 +28,7 @@ class GetRdvApi extends AbstractAction
     {
         try {
             $uri = $rq->getUri()->getPath();
+            
             return $responseToubeelib = $this->client->request(
                 $rq->getMethod(),
                 $this->url. $uri,
@@ -35,6 +36,8 @@ class GetRdvApi extends AbstractAction
                     'timeout' => 5,
                     'headers' => [
                         'accept' => 'application/json',
+                        'Authorization' => $rq->getHeader("Authorization")[0],
+
                     ],
                         'json' => $rq->getParsedBody(),
 

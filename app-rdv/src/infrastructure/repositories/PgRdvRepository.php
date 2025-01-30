@@ -61,6 +61,7 @@ class PgRdvRepository implements RdvRepositoryInterface
                 throw new RepositoryEntityNotFoundException("Rendez vous $id n'existe pas");
             }
         } catch(\PDOException $e) {
+            
             // throw new RepositoryInternalException('Problème avec la base de donnée postgres');
             throw new RepositoryInternalException($e->getMessage());
         }

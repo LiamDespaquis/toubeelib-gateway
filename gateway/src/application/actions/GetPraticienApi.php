@@ -27,13 +27,18 @@ class GetPraticienApi extends AbstractAction
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         $uri = $args["route"];
-
         try {
             $responseToubeelib = $this->client->request(
                 'GET',
                 $this->url .'/praticiens'. $uri,
                 [
-                    "timeout" => 5 ,
+                    'timeout' => 5,
+                    'headers' => [
+                        'accept' => 'application/json',
+                        'Authorization' => $rq->getHeader("Authorization")[0],
+
+                    ],
+                        'json' => $rq->getParsedBody(),
 
                 ]
             );

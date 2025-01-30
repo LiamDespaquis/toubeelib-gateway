@@ -5,7 +5,7 @@ meta {
 }
 
 post {
-  url: http://localhost:6084/signin
+  url: http://localhost:6081/signin
   body: json
   auth: none
 }
@@ -17,4 +17,9 @@ body:json {
     "email":"tbaron@traore.org",
     "password": "tbaron"
   }
+}
+
+script:post-response {
+  // stock le header access-token dans une variable bruno
+  bru.setVar("access-token",res.headers['access-token']);
 }

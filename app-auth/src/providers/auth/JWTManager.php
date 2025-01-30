@@ -54,10 +54,8 @@ class JWTManager{
 
 	public function decodeToken(string $token): array{
 		try{
-
 		return (array) JWT::decode($token, new Key($this->key, $this->algo));
 		}catch(ExpiredException $e){
-			// $this->loger->error($e->getMessage());
 			$this->loger->error($e->getMessage());
 			throw new AuthInvalidException($e->getMessage());
 		}

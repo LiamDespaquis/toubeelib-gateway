@@ -38,7 +38,7 @@ class PgPraticienRepository implements PraticienRepositoryInterface
             }
 
         } catch(\PDOException $e) {
-
+            
             throw new RepositoryInternalException("erreur");
         }
     }

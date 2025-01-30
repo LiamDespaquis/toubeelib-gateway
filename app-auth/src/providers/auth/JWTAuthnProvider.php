@@ -35,8 +35,9 @@ class JWTAuthnProvider implements AuthnProviderInterface{
 
 	public function getSignedInUser(string $atoken): AuthDTO
 	{
-		try{
+		try{;
 		$token = $this->jwtManager->decodeToken($atoken);
+		
 		$authDto = new AuthDTO($token['sub'], $token['role']);
 		return $authDto;
 		}

@@ -8,7 +8,9 @@ use Slim\Routing\RouteCollectorProxy;
 use toubeelibgateway\application\actions\GetPraticien;
 use toubeelibgateway\application\actions\GetPraticienApi;
 use toubeelibgateway\application\actions\GetRdvApi;
+use toubeelibgateway\application\actions\GetAuthApi;
 use toubeelibgateway\application\actions\GetSpecialiteAPI;
+use toubeelibgateway\middlewares\AuthnMiddleware;
 
 return function (\Slim\App $app): \Slim\App {
 
@@ -26,6 +28,7 @@ return function (\Slim\App $app): \Slim\App {
             $group->get('{route:.*}', GetPraticienApi::class);
         }
     );
+
     $app->group('/specialites', function (RouteCollectorProxy $group) {
 
         $group->get('{route:.*}', GetSpecialiteAPI::class);
@@ -37,15 +40,9 @@ return function (\Slim\App $app): \Slim\App {
             $group->get('{route:.*}', GetRdvApi::class);
             $group->post('{route:.*}', GetRdvApi::class);
         }
-    );
+    )->add(AuthnMiddleware::class);
 
-    $app->group(
-        '/auth', 
-        function (RouteCollectorProxy $group) {
-            $group->get('{route:.*}', GetAuthAPI::class);
-            $group->post('{route:.*}', GetAuthApi::class);
-        }
-    );
+    $app->post('/signin', GetAuthApi::class);
 
     return $app;
 };
