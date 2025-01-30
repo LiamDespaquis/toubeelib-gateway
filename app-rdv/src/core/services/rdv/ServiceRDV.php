@@ -20,11 +20,13 @@ use toubeelib\rdv\core\services\rdv\ServiceRDVInterface;
 use toubeelib\rdv\core\repositoryInterfaces\RepositoryEntityNotFoundException;
 use toubeelib\rdv\core\services\rdv\ServiceRDVInvalidDataException;
 use toubeelib\rdv\core\services\rdv\ServiceRessourceNotFoundException;
+use toubeelib\rdv\infrastructure\notification\NotificationInfraInterface;
 
 class ServiceRDV implements ServiceRDVInterface
 {
     private RdvRepositoryInterface $rdvRepository;
     private ServicePraticien $servicePraticien;
+    private NotificationInfraInterface $notificationInfra;
     private string $dateFormat;
 
     public const INTERVAL = 30;
@@ -36,6 +38,7 @@ class ServiceRDV implements ServiceRDVInterface
         $this->rdvRepository = $cont->get(RdvRepositoryInterface::class);
         $this->servicePraticien = $cont->get(ServicePraticienInterface::class);
         $this->dateFormat = $cont->get('date.format');
+        $this->notificationInfra = $cont->get(NotificationInfraInterface::class);
     }
 
     public function getRdvById(string $id): RdvDTO
@@ -73,7 +76,9 @@ class ServiceRDV implements ServiceRDVInterface
             throw new ServiceRDVInvalidDataException("Création de rdv impossible : " . $e->getMessage());
         }
         $this->rdvRepository->addRdv($id, $rdv);
-        return $rdv->toDTO($praticien);
+        $rdvDto =  $rdv->toDTO($praticien);
+        $this->notificationInfra->notifEventRdv($rdvDto, 'CREATE RDV');
+        return $rdvDto;
     }
 
     // TODO: transferer methode a ServicePraticien

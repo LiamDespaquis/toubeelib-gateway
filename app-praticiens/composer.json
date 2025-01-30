@@ -14,7 +14,8 @@
 
     "respect/validation": "^2.3.7",
         "ext-pdo": "*",
-    "guzzlehttp/guzzle": "^7.9"
+    "guzzlehttp/guzzle": "^7.9",
+    "php-amqplib/php-amqplib": "^3.7"
 
   },
   "require-dev": {

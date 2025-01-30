@@ -14,19 +14,13 @@ $builder->addDefinitions(__DIR__ . '/dependencies.php');
 $builder->addDefinitions(__DIR__ . '/actions.php');
 
 $c = $builder->build();
+
 $app = AppFactory::createFromContainer($c);
 
 
 $app->addBodyParsingMiddleware();
-// $app->addMiddleware($c->get(AuthnMiddleware::class));
 $app->addRoutingMiddleware();
 $app->addErrorMiddleware($c->get('displayErrorDetails'), false, false);
-// $app->addMiddleware($c->get(CorsMiddleware::class));
-
-//    ->getDefaultErrorHandler()
-//    ->forceContentType('application/json')
-
-
 
 
 
