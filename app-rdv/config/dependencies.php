@@ -12,6 +12,8 @@ use toubeelib\rdv\core\services\patient\ServicePatient;
 use toubeelib\rdv\core\services\patient\ServicePatientInterface;
 use toubeelib\rdv\core\services\praticien\ServicePraticien;
 use toubeelib\rdv\core\services\praticien\ServicePraticienInterface;
+use toubeelib\rdv\core\services\rdv\AuthorizationRendezVousService;
+use toubeelib\rdv\core\services\rdv\AuthorizationRendezVousServiceInterface;
 use toubeelib\rdv\core\services\rdv\ServiceRDV;
 use toubeelib\rdv\core\services\rdv\ServiceRDVInterface;
 use toubeelib\rdv\infrastructure\notification\NotificationInfraInterface;
@@ -32,6 +34,7 @@ return [
     AuthRepositoryInterface::class => DI\autowire(PgAuthRepository::class),
     PatientRepositoryInterface::class => DI\autowire(PgPatientRepository::class),
 
+    AuthorizationRendezVousServiceInterface::class => DI\autowire(AuthorizationRendezVousService::class),
 
     NotificationInfraInterface::class => DI\get(NotificationRabbitMq::class),
 

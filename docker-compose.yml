@@ -117,7 +117,7 @@ services:
     env_file:
       - ./mailer.env
       - ./amqp.env
-    env_file: ./toubeelib.env
+      - ./toubeelib.env
     ports:
       - $PORT_RDV:80
     volumes:

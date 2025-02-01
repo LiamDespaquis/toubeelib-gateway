@@ -19,8 +19,8 @@ return function (\Slim\App $app): \Slim\App {
     //PRATICIENS
 
     $app->group('/praticiens', function (RouteCollectorProxy $group) {
-        $group->get('[/]', SearchPraticien::class)->setName('searchPraticiens')->add(AuthzPraticiens::class);
-        $group->get('/{id}[/]', GetPraticien::class)->setName('getPraticien')->add(AuthzPraticiens::class);
+        $group->get('[/]', SearchPraticien::class)->setName('searchPraticiens');
+        $group->get('/{id}[/]', GetPraticien::class)->setName('getPraticien');
     });
     $app->get('/praticiens/{id}/dispos[/]', GetDisposPraticienDate::class)
         ->setName('disposPraticienDate');

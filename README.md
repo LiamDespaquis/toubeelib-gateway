@@ -1,15 +1,18 @@
-# Toubeelib
+# Toubeelib GATEWAY
 DAZA Sasha
 DESPAQUIS Liam
 PINOT Gaëtan
 
 ## Config
 Fichier de config à créer (copier le fichier .dist existant en enlevant .dist):
-- `./toubeelib.env`
-- `./toubeelibdb.env`
-- `./toubeelibauthdb.env`
-- `./app/config/pdoConfig.ini`
-- `./app/config/pdoConfigAuth.ini`  
+
+- `amqp.env`
+- `mailer.env`
+- `toubeelibauthdb.env`
+- `toubeelibdb.env`
+- `toubeelib.env`
+- `./app-rdv/config/pdoConfig.ini`
+- `./app-auth/config/pdoConfigAuth.ini`  
 Ils peuvent aussi êtres copié diréctement avec `make confFiles`  
 Les mots de passes doivent être consistant dans la db  
 Utiliser `make install` pour installer le projet de zero avec composer dans le docker, les autres commandes makes peuvent être utilisés individuellement

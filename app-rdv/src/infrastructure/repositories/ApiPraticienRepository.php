@@ -50,14 +50,19 @@ class ApiPraticienRepository implements PraticienRepositoryInterface
     public function getPraticienById(string $id): Praticien
     {
         try {
-            $resPraticien = $this->client->request('GET', "praticiens/" . $id );
+            $resPraticien = $this->client->request('GET', "praticiens/" . $id);
             $objPraticien = json_decode($resPraticien->getBody()->getContents());
-        
+
+            if($objPraticien == null) {
+                throw new RepositoryEntityNotFoundException("Praticien $id n'existe pas");
+            }
+
             $praticien = new Praticien($objPraticien->nom, $objPraticien->prenom, $objPraticien->adresse, $objPraticien->tel);
             $praticien->setId($objPraticien->id);
             $praticien->setSpecialite(new Specialite('', $objPraticien->specialiteLabel), '');
             return $praticien;
         } catch (ConnectException | ServerException $e) {
+            echo $e->getTraceAsString();
             throw new RepositoryInternalException($e->getMessage());
         } catch(\Exception $e) {
             $this->logger->error($e->getTraceAsString());

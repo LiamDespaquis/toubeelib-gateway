@@ -26,19 +26,22 @@ class GetPraticienApi extends AbstractAction
     }
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
+        /*var_dump($rq->getHeaders());*/
+        /*var_dump($rq->getHeader('Authorization')[0]);*/
         $uri = $args["route"];
+        $headers = [];
+        if ($rq->hasHeader("Authorization")) {
+            $headers['Authorization'] = $rq->getHeader("Authorization")[0];
+        }
         try {
             $responseToubeelib = $this->client->request(
                 'GET',
                 $this->url .'/praticiens'. $uri,
                 [
                     'timeout' => 5,
-                    'headers' => [
-                        'accept' => 'application/json',
-                        'Authorization' => $rq->getHeader("Authorization")[0],
-
-                    ],
-                        'json' => $rq->getParsedBody(),
+                    /*$rq->getHeaders(),*/
+                    'headers' => $headers,
+                    'json' => $rq->getParsedBody(),
 
                 ]
             );
@@ -47,10 +50,10 @@ class GetPraticienApi extends AbstractAction
             return JsonRenderer::render($rs, $status)->withBody($body);
         } catch (ConnectException | ServerException $e) {
             return $e->getResponse();
-            
+
         } catch (ClientException $e) {
             return $e->getResponse();
-            
+
         }
     }
 }

@@ -14,6 +14,8 @@ composer:
 	docker exec -it $(phpdocker) composer install
 	docker exec -it gateway_toubeelib composer install
 	docker compose run --rm api.toubeelib.rdv composer install
+	docker compose run --rm api.toubeelib.praticiens composer install
+	docker compose run --rm api.toubeelib.auth composer install
 genereDb:
 	docker exec -it $(phpdocker) php ./src/infrastructure/genereAuthDb.php
 	docker exec -it $(phpdocker) php ./src/infrastructure/genereDB.php
