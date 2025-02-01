@@ -30,8 +30,7 @@ return function (\Slim\App $app): \Slim\App {
     );
 
     $app->group('/specialites', function (RouteCollectorProxy $group) {
-
-        $group->get('{route:.*}', GetSpecialiteAPI::class);
+        $group->get('{route:.*}', GetPraticienApi::class);
     });
 
     $app->group(

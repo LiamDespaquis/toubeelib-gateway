@@ -31,7 +31,6 @@ class AuthzRDV implements MiddlewareInterface
         $this->loger = $co->get(Logger::class)->withName("AutnzRDVMiddleware");
         $this->authrdvservice = $co->get(AuthorizationRendezVousServiceInterface::class);
         //Pour pouvoir manipuler le token
-        $this->key = getenv('JWT_SECRET_KEY');
         $this->algo = $co->get('token.jwt.algo');
     }
 
@@ -43,8 +42,10 @@ class AuthzRDV implements MiddlewareInterface
         $token = $rq->getHeader("Authorization")[0];
         $token = sscanf($token, "Bearer %s")[0];
 
+        //methode pour decoder sans la clé
         [, $payload_b64] = explode('.', $token);
         $payload = JWT::jsonDecode(JWT::urlsafeB64Decode($payload_b64));
+
         try {
             if($this->authrdvservice->isGranted($payload->sub, 1, $idRdv, $payload->role)) {
                 return $next->handle($rq);

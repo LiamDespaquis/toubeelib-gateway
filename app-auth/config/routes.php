@@ -24,7 +24,7 @@ return function (\Slim\App $app): \Slim\App {
 
     $app->post('/signin[/]', PostSignIn::class)->setName('signIn');
 
-    $app->get('/validateToken[/]', ValidateTokenAction::class )->setName('ValidateToken');
+    $app->get('/validateToken[/]', ValidateTokenAction::class)->setName('ValidateToken');
 
     $app->options('/{routes:.+}', function ($request, $response, $args) {
         return $response;
@@ -33,7 +33,7 @@ return function (\Slim\App $app): \Slim\App {
         throw new HttpNotFoundException($request);
     });
 
-    
+
 
 
     return $app;

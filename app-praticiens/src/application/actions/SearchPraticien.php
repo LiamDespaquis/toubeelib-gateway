@@ -41,7 +41,11 @@ class SearchPraticien extends AbstractAction
 
             $praticiensCherche = $this->servicePraticien->searchPraticien($praticienDto);
             $this->loger->info("recherche du praticien $praticienDto");
-            return JsonRenderer::render($rs, 200, $praticiensCherche);
+            $rs = JsonRenderer::render($rs, 200, $praticiensCherche);
+            $this->loger->error(array_reduce($rs->getHeaders(), function ($carry, $item) {
+                return $carry . $item[0] . "\n";
+            }, ""));
+            return $rs;
 
         } catch(Exception $e) {
             throw new HttpInternalServerErrorException($rq, $e->getMessage());

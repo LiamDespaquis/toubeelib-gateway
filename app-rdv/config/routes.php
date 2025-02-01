@@ -30,6 +30,7 @@ return function (\Slim\App $app): \Slim\App {
     $app->get('/praticiens/{id}/rdvs[/]', GetPraticienPlanning::class)->setName('getRdvByPraticien');
     $app->get('/praticiens/{id}/dispos[/]', GetDisposPraticienDate::class)->setName('getDisposPraticienDate');
     $app->options('/{routes:.+}', function ($request, $response, $args) {
+        echo $request->getMethod(). ":" . $request->getUri()->getPath();
         return $response;
     });
     $app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {

@@ -22,13 +22,8 @@ return function (\Slim\App $app): \Slim\App {
         $group->get('[/]', SearchPraticien::class)->setName('searchPraticiens');
         $group->get('/{id}[/]', GetPraticien::class)->setName('getPraticien');
     });
-    $app->get('/praticiens/{id}/dispos[/]', GetDisposPraticienDate::class)
-        ->setName('disposPraticienDate');
 
     $app->get('/specialites/{id}[/]', GetSpecialite::class);
-
-    /*$app->get('/praticiens/{id}/rdvs[/]', GetPraticienPlanning::class)*/
-    /*    ->setName('planningPraticien');*/
 
 
     $app->options('/{routes:.+}', function ($request, $response, $args) {
