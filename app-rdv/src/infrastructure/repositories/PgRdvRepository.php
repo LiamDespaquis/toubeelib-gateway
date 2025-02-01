@@ -5,6 +5,7 @@ namespace toubeelib\rdv\infrastructure\repositories;
 use DI\Container;
 use Monolog\Logger;
 use PDO;
+use toubeelib\rdv\core\domain\entities\praticien\Praticien;
 use toubeelib\rdv\core\domain\entities\rdv\RendezVous;
 use toubeelib\rdv\core\repositoryInterfaces\PraticienRepositoryInterface;
 use toubeelib\rdv\core\repositoryInterfaces\RdvRepositoryInterface;
@@ -61,7 +62,7 @@ class PgRdvRepository implements RdvRepositoryInterface
                 throw new RepositoryEntityNotFoundException("Rendez vous $id n'existe pas");
             }
         } catch(\PDOException $e) {
-            
+
             // throw new RepositoryInternalException('Problème avec la base de donnée postgres');
             throw new RepositoryInternalException($e->getMessage());
         }
@@ -100,43 +101,11 @@ class PgRdvRepository implements RdvRepositoryInterface
         }
     }
 
-    public function getRdvByPraticien(string $id): array
+    public function getRdvByPraticienById(string $id): array
     {
-        try {
-            $query = "select 
-            rdv.id as id,
-            rdv.patientid as patientid,
-            rdv.praticienid as praticienid,
-            rdv.date as date
-            from rdv
-            where 
-            rdv.praticienId= :id;";
-            $rdvs = $this->pdo->prepare($query);
-            $rdvs->execute(['id' => $id]);
-            $result = $rdvs->fetchAll();
+        $praticien = $this->repositoryPraticien->getPraticienById($id);
+        return $this->getRdvByPraticien($praticien);
 
-            $praticien = $this->repositoryPraticien->getPraticienById($id);
-
-            if($result) {
-                $retour = [];
-                foreach($result as $r) {
-                    $rdv = new RendezVous($r['praticienid'], $r['patientid'], $praticien->specialite->label, new \DateTimeImmutable($r['date']));
-                    $rdv->setId($r['id']);
-                    $retour[] = $rdv;
-                }
-                return $retour;
-
-
-            } else {
-                $this->loger->error("");
-                throw new RepositoryEntityNotFoundException("Praticien $id not found");
-            }
-
-        } catch(\PDOException $e) {
-            throw new RepositoryInternalException($e->getMessage());
-        } catch(\Exception $e) {
-            throw new RepositoryInternalException($e->getMessage());
-        }
     }
 
     public function getRdvByPatient(string $id): array
@@ -224,6 +193,45 @@ class PgRdvRepository implements RdvRepositoryInterface
 
         } catch(\PDOException $e) {
             $this->loger->error($e->getMessage());
+            throw new RepositoryInternalException($e->getMessage());
+        }
+    }
+
+    public function getRdvByPraticien(Praticien $prat): array
+    {
+        try {
+            $id = $prat->getId();
+            $query = "select 
+            rdv.id as id,
+            rdv.patientid as patientid,
+            rdv.praticienid as praticienid,
+            rdv.date as date
+            from rdv
+            where 
+            rdv.praticienId= :id;";
+            $rdvs = $this->pdo->prepare($query);
+            $rdvs->execute(['id' => $id]);
+            $result = $rdvs->fetchAll();
+
+
+            if($result) {
+                $retour = [];
+                foreach($result as $r) {
+                    $rdv = new RendezVous($r['praticienid'], $r['patientid'], $prat->specialite->label, new \DateTimeImmutable($r['date']));
+                    $rdv->setId($r['id']);
+                    $retour[] = $rdv;
+                }
+                return $retour;
+
+
+            } else {
+                $this->loger->error("");
+                throw new RepositoryEntityNotFoundException("Praticien $id not found");
+            }
+
+        } catch(\PDOException $e) {
+            throw new RepositoryInternalException($e->getMessage());
+        } catch(\Exception $e) {
             throw new RepositoryInternalException($e->getMessage());
         }
     }

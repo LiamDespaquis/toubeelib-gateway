@@ -9,6 +9,7 @@ use Error;
 use Faker\Core\Uuid;
 use PHPUnit\Framework\MockObject\Exception;
 use Ramsey\Uuid\Uuid as RamseyUuid;
+use toubeelib\rdv\core\domain\entities\praticien\Praticien;
 use toubeelib\rdv\core\domain\entities\rdv\RendezVous;
 use toubeelib\rdv\core\dto\InputRdvDto;
 use toubeelib\rdv\core\dto\RdvDTO;
@@ -81,12 +82,11 @@ class ServiceRDV implements ServiceRDVInterface
         return $rdvDto;
     }
 
-    // TODO: transferer methode a ServicePraticien
     public function getListeDisponibilite(string $idPraticien): array
     {
 
         $results = [];
-        $listeRDV = $this->rdvRepository->getRdvByPraticien($idPraticien);
+        $listeRDV = $this->rdvRepository->getRdvByPraticienById($idPraticien);
         $listeRDVHorraires = array_map(function ($rdv) {
             if ($rdv->status != RendezVous::ANNULE) {
                 $rr = $rdv->dateHeure->format($this->dateFormat);
@@ -117,7 +117,7 @@ class ServiceRDV implements ServiceRDVInterface
         //echo "test for getListeDisponibiliteDate";
 
         $results = [];
-        $listeRDV = $this->rdvRepository->getRdvByPraticien($idPraticien);
+        $listeRDV = $this->rdvRepository->getRdvByPraticienById($idPraticien);
         $listeRDVHorraires = array_map(function ($rdv) {
             if ($rdv->status != RendezVous::ANNULE) {
                 $rr = $rdv->dateHeure->format($this->dateFormat);
@@ -160,10 +160,11 @@ class ServiceRDV implements ServiceRDVInterface
             ? $inputEndDate->setTime(ServiceRDV::HDEBUT[0], ServiceRDV::HDEBUT[1])
             : (new \DateTimeImmutable('now'))->setTime(ServiceRDV::HDEBUT[0], ServiceRDV::HDEBUT[1])->add(new DateInterval('P31D'));
 
-        $listeRDV = $this->rdvRepository->getRdvByPraticien($idPraticien);
+        $praticien = $this->servicePraticien->getPraticienById($idPraticien);
+        $listeRDV = $this->rdvRepository->getRdvByPraticien(Praticien::fromDTO($praticien));
         foreach($listeRDV as $rdv) {
             if ($rdv->status != RendezVous::ANNULE && $rdv->dateHeure->format('U') > $startDate->format('U') && $rdv->dateHeure->format('U') < $endDate->format('U')) {
-                $results[] = $rdv->toDTO($this->servicePraticien->getPraticienById($idPraticien));
+                $results[] = $rdv->toDTO($praticien);
             }
         }
 

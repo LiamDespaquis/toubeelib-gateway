@@ -27,9 +27,13 @@ class Praticien extends Entity
         $this->specialite = $specialite;
     }
 
-    public static function fromDTO(PraticienDTO $p): Praticien{
-        $pra = new Praticien($p->nom,$p->prenom,$p->adresse,"");
-        $pra->setSpecialite(new Specialite($p->id,$p->specialiteLabel));
+    public static function fromDTO(PraticienDTO $p): Praticien
+    {
+        $pra = new Praticien($p->nom, $p->prenom, $p->adresse, "");
+        $pra->setSpecialite(new Specialite($p->id, $p->specialiteLabel));
+        if($p->id != null) {
+            $pra->setId($p->id);
+        }
         return ($pra);
     }
 
