@@ -27,6 +27,5 @@ cache.properties
 .php_cs.cache
 # Composer
 composer.phar
-composer.lock
 .php-cs-fixer.cache
 logs
