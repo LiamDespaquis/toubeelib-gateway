@@ -33,7 +33,6 @@ services:
     # build:
     #   context: build
     #   dockerfile: 8.2.dockerfile
-    env_file: ./toubeelib.env
     container_name: gateway_toubeelib
     ports:
       - '6081:80'
@@ -61,7 +60,6 @@ services:
     # build:
     #   context: build
     #   dockerfile: 8.3-cli.Dockerfile
-    env_file: ./toubeelib.env
     container_name: api_toubeelib_praticien
     ports:
       - $PORT_PRATICIEN:80
@@ -80,7 +78,6 @@ services:
     env_file:
       - ./mailer.env
       - ./amqp.env
-      - ./toubeelib.env
     ports:
       - $PORT_RDV:80
     volumes:
