@@ -5,7 +5,9 @@ declare(strict_types=1);
 use Slim\Exception\HttpNotFoundException;
 use Slim\Routing\RouteCollectorProxy;
 use toubeelib\rdv\application\actions\GetDisposPraticienDate;
+use toubeelib\rdv\application\actions\GetPatient;
 use toubeelib\rdv\application\actions\GetPraticienPlanning;
+use toubeelib\rdv\application\actions\GetRdvByPatient;
 use toubeelib\rdv\application\actions\PatchRdv;
 use toubeelib\rdv\application\actions\DeleteRdvId;
 use toubeelib\rdv\application\actions\GetRdvId;
@@ -33,6 +35,10 @@ return function (\Slim\App $app): \Slim\App {
         echo $request->getMethod(). ":" . $request->getUri()->getPath();
         return $response;
     });
+
+    $app->get('/patients/{id}/rdvs[/]', GetRdvByPatient::class)->setName('getRdvByPatient');
+    $app->get('/patients/{id}[/]', GetPatient::class)->setName('getPatient');
+
     $app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {
         throw new HttpNotFoundException($request);
     });

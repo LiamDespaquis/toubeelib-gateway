@@ -1,4 +1,5 @@
 <?php
+
 namespace toubeelib\praticiens\infrastructure\repositories;
 
 use DI\Container;
@@ -11,31 +12,32 @@ use toubeelib\praticiens\core\repositoryInterfaces\PraticienRepositoryInterface;
 use toubeelib\praticiens\core\repositoryInterfaces\RepositoryEntityNotFoundException;
 use toubeelib\praticiens\core\repositoryInterfaces\RepositoryInternalException;
 
-class PgPraticienRepository implements PraticienRepositoryInterface{
-
+class PgPraticienRepository implements PraticienRepositoryInterface
+{
     protected PDO $pdo;
     protected Logger $loger;
 
-    public function __construct(Container $cont){
-        $this->pdo=$cont->get('pdo.commun');
-        $this->loger= $cont->get(Logger::class)->withName("PgPraticienRepository");
+    public function __construct(Container $cont)
+    {
+        $this->pdo = $cont->get('pdo.commun');
+        $this->loger = $cont->get(Logger::class)->withName("PgPraticienRepository");
     }
     public function getSpecialiteById(string $id): Specialite
     {
-        try{
+        try {
             $query = 'select * from specialite where id = :id;';
-            $speSelect=$this->pdo->prepare($query);
-            $speSelect->execute(['id'=> $id]);
-            $result=$speSelect->fetch();
+            $speSelect = $this->pdo->prepare($query);
+            $speSelect->execute(['id' => $id]);
+            $result = $speSelect->fetch();
 
-            if($result){
+            if($result) {
                 return new Specialite($result['id'], $result['label'], $result['description']);
-            }else{
+            } else {
                 throw new RepositoryEntityNotFoundException("Specialite $id non trouvé");
             }
 
-        }catch(PDOException $e){
-            
+        } catch(PDOException $e) {
+
             throw new RepositoryInternalException("erreur");
         }
     }
@@ -46,8 +48,8 @@ class PgPraticienRepository implements PraticienRepositoryInterface{
 
     public function getPraticienById(string $id): Praticien
     {
-        try{
-            $query='
+        try {
+            $query = '
             select
             praticien.id as id,
             praticien.nom as nom,
@@ -63,19 +65,19 @@ class PgPraticienRepository implements PraticienRepositoryInterface{
             where 
             specialite.id=praticien.specialite and
             praticien.id=:id;';
-            $praticienSelect=$this->pdo->prepare($query);
+            $praticienSelect = $this->pdo->prepare($query);
             $praticienSelect->execute(['id' => $id]);
             $result = $praticienSelect->fetch();
-            if($result){
-                $retour= new Praticien($result['nom'],$result['prenom'],$result['adresse'],$result['tel']);
+            if($result) {
+                $retour = new Praticien($result['nom'], $result['prenom'], $result['adresse'], $result['tel']);
                 $retour->setId($result['id']);
-                $retour->setSpecialite(new Specialite($result['speid'],$result['spelabel'],$result['spedes']));
+                $retour->setSpecialite(new Specialite($result['speid'], $result['spelabel'], $result['spedes']));
                 return $retour;
-            }else{
+            } else {
                 throw new RepositoryEntityNotFoundException("Praticien $id non trouvé");
             }
 
-        }catch(PDOException $e){
+        } catch(PDOException $e) {
             throw new RepositoryInternalException('Erreure bd');
         }
     }
@@ -102,7 +104,7 @@ class PgPraticienRepository implements PraticienRepositoryInterface{
         upper(praticien.adresse) like upper(:adresse) and
         upper(specialite.label) like upper(:label)
         ;";
-        try{
+        try {
             $searchpraticiens = $this->pdo->prepare($query);
             $val = [
                 'nom' => $praticien->nom,
@@ -110,26 +112,26 @@ class PgPraticienRepository implements PraticienRepositoryInterface{
                 'adresse' => $praticien->adresse,
                 'label' => $praticien->specialite->label,
             ];
-            $val = array_map(function (string $v){
+            $val = array_map(function (string $v) {
                 return "%$v%";
-            },$val);
+            }, $val);
             $searchpraticiens->execute($val);
             $praticiens = $searchpraticiens->fetchAll();
-            if(!$praticiens){
-            $this->loger->info("Nombre de praticien trouvé : 0");
+            if(!$praticiens) {
+                $this->loger->info("Nombre de praticien trouvé : 0");
                 return [];
             }
             $retour = [];
-            foreach($praticiens as $p){
-                $pra = new Praticien($p['nom'],$p['prenom'],$p['adresse'],$p['tel']);
+            foreach($praticiens as $p) {
+                $pra = new Praticien($p['nom'], $p['prenom'], $p['adresse'], $p['tel']);
                 $pra->setId($p['id']);
-                $pra->setSpecialite(new Specialite($p['speid'],$p['spelabel'],$p['spedes']));
-                $retour[]= $pra;
+                $pra->setSpecialite(new Specialite($p['speid'], $p['spelabel'], $p['spedes']));
+                $retour[] = $pra;
             }
             $this->loger->info("Nombre de praticien trouvé : ". count($retour));
             return $retour;
 
-        }catch(PDOException $e){
+        } catch(PDOException $e) {
             $this->loger->error($e->getMessage());
             throw new RepositoryInternalException('erreur bd');
         }

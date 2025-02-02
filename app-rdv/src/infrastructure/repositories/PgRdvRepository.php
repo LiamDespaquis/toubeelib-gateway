@@ -117,16 +117,11 @@ class PgRdvRepository implements RdvRepositoryInterface
                 rdv.patientid as patientid,
                 rdv.praticienid as praticienid,
                 rdv.date as date, 
-                rdv.status as status,
-                praticien.specialite as specialite 
+                rdv.status as status
             from 
-                rdv,
-                praticien,
-                specialite 
+                rdv
             where 
-                rdv.praticienId=praticien.id 
-                and praticien.specialite=specialite.id 
-                and rdv.patientid= :id;";
+            rdv.patientid= :id;";
             $rdvs = $this->pdo->prepare($query);
             $rdvs->execute(['id' => $id]);
             $result = $rdvs->fetchAll();
@@ -134,7 +129,7 @@ class PgRdvRepository implements RdvRepositoryInterface
             if($result) {
                 $retour = [];
                 foreach($result as $r) {
-                    $rdv = new RendezVous($r['praticienid'], $r['patientid'], $r['specialite'], new \DateTimeImmutable($r['date']), $r['status']);
+                    $rdv = new RendezVous($r['praticienid'], $r['patientid'], '', new \DateTimeImmutable($r['date']), $r['status']);
                     $rdv->setId($r['id']);
                     $retour[] = $rdv;
                 }

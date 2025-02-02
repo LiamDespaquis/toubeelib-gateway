@@ -38,8 +38,13 @@ return function (\Slim\App $app): \Slim\App {
         function (RouteCollectorProxy $group) {
             $group->get('{route:.*}', GetRdvApi::class);
             $group->post('{route:.*}', GetRdvApi::class);
+            $group->delete('{route:.*}', GetRdvApi::class);
         }
     )->add(AuthnMiddleware::class);
+
+    $app->group('/patients', function (RouteCollectorProxy $group) {
+        $group->get('{route:.*}', GetRdvApi::class);
+    });
 
     $app->post('/signin', GetAuthApi::class);
 

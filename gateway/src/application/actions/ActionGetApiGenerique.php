@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
@@ -52,6 +53,7 @@ class ActionGetApiGenerique
                    'timeout' => 5,
                    'headers' => $headers,
                    'json' => $rq->getParsedBody(),
+                    'query' => $rq->getQueryParams(),
 
                 ]
             );

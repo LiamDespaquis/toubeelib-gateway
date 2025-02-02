@@ -12,6 +12,7 @@ Fichier de config à créer (copier le fichier .dist existant en enlevant .dist)
 - `toubeelibdb.env`
 - `toubeelib.env`
 - `./app-rdv/config/pdoConfig.ini`
+- `./app-praticiens/config/pdoConfig.ini`
 - `./app-auth/config/pdoConfigAuth.ini`  
 Ils peuvent aussi êtres copié diréctement avec `make confFiles`  
 Les mots de passes doivent être consistant dans la db  
