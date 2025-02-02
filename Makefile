@@ -1,9 +1,12 @@
 install: 
-	make composerInstalle
 	make up
+	make composerInstalle
+	make genererDbAuth
 	make genereDbPraticien
 	make genereDbRdv
-	make genererDbAuth
+
+chmodLog:
+	chmod 777 ./logs -R
 
 up:
 	docker compose up -d --remove-orphans --build
@@ -29,7 +32,7 @@ genereDbRdv:
 	docker compose exec  api.toubeelib.rdv php ./src/infrastructure/genereDB.php
 
 genererDbAuth: 
-	docker compose exec  api.toubeelib.auth php ./src/infrastructure/genereDB.php
+	docker compose exec  api.toubeelib.auth php ./src/infrastructure/genereAuthDB.php
 
 watchLogs:
 	watch -n 2 tail app/var/logs
