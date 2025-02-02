@@ -1,36 +1,15 @@
 <?php
 
 use Psr\Container\ContainerInterface;
-
-
 use toubeelib\praticiens\core\repositoryInterfaces\PraticienRepositoryInterface;
-
 use toubeelib\praticiens\core\services\AuthorizationPatientService;
 use toubeelib\praticiens\core\services\AuthorizationPatientServiceInterface;
-
-
-
-
 use toubeelib\praticiens\core\services\praticien\AuthorizationPraticienService;
 use toubeelib\praticiens\core\services\praticien\AuthorizationPraticienServiceInterface;
 use toubeelib\praticiens\core\services\praticien\ServicePraticien;
 use toubeelib\praticiens\core\services\praticien\ServicePraticienInterface;
-
-
-
-
-
-
 use toubeelib\praticiens\infrastructure\repositories\PgPraticienRepository;
-
-
-
 use toubeelib\praticiens\middlewares\AuthzPraticiens;
-
-
-use toubeelib\praticiens\providers\auth\AuthnProviderInterface;
-use toubeelib\praticiens\providers\auth\JWTAuthnProvider;
-use toubeelib\praticiens\providers\auth\JWTManager;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Formatter\LineFormatter;
@@ -58,9 +37,6 @@ return [
         return new PDO($config['driver'].':host='.$config['host'].';port='.$config['port'].';dbname='.$config['dbname'].';user='.$config['user'].';password='.$config['password']);
     },
 
-    //auth
-    JWTManager::class => DI\autowire(JWTManager::class),
-    AuthnProviderInterface::class => DI\autowire(JWTAuthnProvider::class),
 
     StreamHandler::class => DI\create(StreamHandler::class)
         ->constructor(DI\get('logs.dir'), Logger::DEBUG)

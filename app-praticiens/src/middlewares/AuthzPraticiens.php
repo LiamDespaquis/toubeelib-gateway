@@ -26,7 +26,6 @@ class AuthzPraticiens implements MiddlewareInterface
     {
         $this->loger = $co->get(Logger::class)->withName("AutnzRDVMiddleware");
         $this->authpraticienservice = $co->get(AuthorizationPraticienServiceInterface::class);
-        $this->key = getenv('JWT_SECRET_KEY');
         $this->algo = $co->get('token.jwt.algo');
     }
 
@@ -35,10 +34,13 @@ class AuthzPraticiens implements MiddlewareInterface
         $idPraticien = RouteContext::fromRequest($rq)->getRoute()->getArgument('id');
         $token = $rq->getHeader("Authorization")[0];
         $token = sscanf($token, "Bearer %s")[0];
-        $decoded_token = (array) JWT::decode($token, new Key($this->key, $this->algo));
+
+        [, $payload_b64] = explode('.', $token);
+        $decoded_token = JWT::jsonDecode(JWT::urlsafeB64Decode($payload_b64));
+
 
         /*var_dump($decoded_token);*/
-        if($this->authpraticienservice->isGranted($decoded_token['sub'], 1, $idPraticien, $decoded_token['role'])) {
+        if($this->authpraticienservice->isGranted($decoded_token->sub, 1, $idPraticien, $decoded_token->role)) {
             return $next->handle($rq);
         } else {
             throw new HttpUnauthorizedException($rq, "Accès au praticien $idPraticien non authorisé");

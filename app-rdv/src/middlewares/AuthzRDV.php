@@ -12,9 +12,7 @@ use Slim\Exception\HttpNotFoundException;
 use Slim\Exception\HttpUnauthorizedException;
 use Slim\Routing\RouteContext;
 use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
 use toubeelib\rdv\core\services\ServiceRessourceNotFoundException;
-use toubeelib\rdv\providers\auth\AuthInvalidException;
 use toubeelib\rdv\core\services\rdv\AuthorizationRendezVousServiceInterface;
 
 class AuthzRDV implements MiddlewareInterface
