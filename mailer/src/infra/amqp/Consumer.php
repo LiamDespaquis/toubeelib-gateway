@@ -14,12 +14,16 @@ class Consumer
     private AMQPStreamConnection $connection;
     private string $queue;
     private AMQPChannel $channel;
-    public function __construct(MailerInterface $mailer, AMQPStreamConnection $connection, string $queue)
+
+    public function __construct(MailerInterface $mailer, AMQPStreamConnection $connection, string $queue, string $exchangeName, string $routingKey)
     {
         $this->mailer = $mailer;
         $this->connection = $connection;
         $this->queue = $queue;
         $this->channel = $this->connection->channel();
+        $this->channel->exchange_declare($exchangeName, 'direct', false, true, false);
+        $this->channel->queue_declare($this->queue, false, true, false, false);
+        $this->channel->queue_bind($this->queue, $exchangeName, $routingKey);
 
     }
     public function __invoke(AMQPMessage $msg): void
