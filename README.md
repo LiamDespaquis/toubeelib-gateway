@@ -3,17 +3,23 @@ DAZA Sasha
 DESPAQUIS Liam
 PINOT Gaëtan
 
-## Config
+## Installation
+
+TLDR: `make confFiles && make chmodLog && make install` (Tant que les ports par défaut du `.env` ne sont pas utilisés)  
+
 
 Fichier de config à créer (copier le fichier .dist existant en enlevant .dist):  
 (Ils peuvent aussi êtres copié diréctement avec `make confFiles`)  
+- `.env` Contient les variables d'environnement pour les ports des services
 - `amqp.env`
 - `mailer.env`
 - `toubeelibauthdb.env`
 - `toubeelibdb.env`
 - `toubeelib.env`
 - `./app-rdv/config/pdoConfig.ini`
+- `./app-rdv/config/pdoConfigAuth.ini` (ne sont pas utile en prod, juste pour accéder au id d'users dans l'authdb pour créer des données de test dans la db)
 - `./app-praticiens/config/pdoConfig.ini`
+- `./app-praticiens/config/pdoConfigAuth.ini`(ne sont pas utile en prod, juste pour accéder au id d'users dans l'authdb pour créer des données de test dans la db)
 - `./app-auth/config/pdoConfigAuth.ini`  
 Les mots de passes doivent être consistant dans la db  
 
@@ -23,6 +29,11 @@ Utiliser `make install` pour installer le projet de zero avec composer dans le d
 
 
 Il serat peut être nécéssaires de faire un `make chmodLog` pour que les fichier de logs aient les bonnes permissions dans le docker.  
+
+## Description
+
+Il y à 3 services, un pour les praticiens, un pour les rendez vous et un pour l'authentification.
+Celui pour les rendez vous sert aussi pour les patients car jugé non nécéssaire pour l'exercice étant donné qu'on en a déjà créé 3.
 
 ## Tests
 
@@ -35,8 +46,4 @@ Il faut commencer par executer une requête de connexion, en tant que praticien 
 Il faut ajuster les requettes avecs des ids de rendez vous car ils sont regénéré aléatoirement a chaque foit qu'on regénère la base de donnée.  
 Il faut aussi ajuster les heures de creation du rdv en fonction des disponibilité du praticien.  
 
-
-## TODO
-~.env dans maekfile~
-.ini dans les micro service qui pointe vers les bonnes bd
 
