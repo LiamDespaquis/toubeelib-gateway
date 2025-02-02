@@ -19,6 +19,11 @@ body:json {
   }
 }
 
+assert {
+  res.status: eq 201
+  res.headers['access-token']: isNotEmpty 
+}
+
 script:post-response {
   // stock le header access-token dans une variable bruno
   bru.setVar("access-token",res.headers['access-token']);

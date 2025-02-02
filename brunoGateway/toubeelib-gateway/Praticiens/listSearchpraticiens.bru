@@ -16,3 +16,14 @@ params:query {
   ~nom: del
   ~adresse: 54
 }
+
+assert {
+  res.status: eq 200
+}
+
+tests {
+  test("Devrait uniquement être dentiste", function(){
+    const data = res.getBody()
+    data.forEach((prat) => expect(prat.specialiteLabel).to.equal("Dentiste"))
+  })
+}

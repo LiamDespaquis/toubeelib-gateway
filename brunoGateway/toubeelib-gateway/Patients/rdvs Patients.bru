@@ -13,3 +13,8 @@ get {
 params:path {
   id: 118a9bca-b30e-360a-9acb-0f44498fa9cb
 }
+
+assert {
+  res.status: eq 200
+  res.body.rendezVous: isDefined
+}

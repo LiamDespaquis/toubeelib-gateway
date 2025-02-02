@@ -21,6 +21,7 @@ body:json {
 
 assert {
   res.status: eq 201
+  res.headers['access-token']: isNotEmpty 
 }
 
 script:post-response {
