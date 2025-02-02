@@ -1,11 +1,16 @@
 meta {
   name: disposPraticiens
   type: http
-  seq: 4
+  seq: 5
 }
 
 get {
-  url: http://localhost:6083/praticiens/2c32033b-1f4d-315e-b285-3e6ea3b30381/dispos
+  url: {{gateway}}/praticiens/2c32033b-1f4d-315e-b285-3e6ea3b30381/dispos?date_debut=2025-02-05 09:00&date_fin=2025-02-08 09:00
   body: none
   auth: none
+}
+
+params:query {
+  date_debut: 2025-02-05 09:00
+  date_fin: 2025-02-08 09:00
 }

@@ -1,0 +1,20 @@
+meta {
+  name: signin Patient
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{gateway}}/signin
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    // Patient
+    // "id":"118a9bca-b30e-360a-9acb-0f44498fa9cb",
+    "email": "munoz.theophile@laposte.net",
+    "password": "munoz.theophile"
+  }
+}

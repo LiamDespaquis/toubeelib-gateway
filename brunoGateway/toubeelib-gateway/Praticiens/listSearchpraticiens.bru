@@ -1,11 +1,18 @@
 meta {
   name: listSearchpraticiens
   type: http
-  seq: 1
+  seq: 2
 }
 
 get {
-  url: http://localhost:6081/praticiens/
+  url: {{gateway}}/praticiens?specialite=dent
   body: none
   auth: none
+}
+
+params:query {
+  specialite: dent
+  ~prenom: ro
+  ~nom: del
+  ~adresse: 54
 }

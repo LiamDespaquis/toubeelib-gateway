@@ -1,11 +1,11 @@
 meta {
   name: validatetoken
   type: http
-  seq: 3
+  seq: 1
 }
 
 get {
-  url: http://localhost:6084/validateToken
+  url: {{auth}}/validateToken
   body: none
   auth: none
 }

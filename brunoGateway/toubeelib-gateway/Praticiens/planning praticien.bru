@@ -1,11 +1,16 @@
 meta {
   name: planning praticien
   type: http
-  seq: 3
+  seq: 4
 }
 
 get {
-  url: http://localhost:6081/praticiens/2c32033b-1f4d-315e-b285-3e6ea3b30381/rdvs
+  url: {{gateway}}/praticiens/2c32033b-1f4d-315e-b285-3e6ea3b30381/rdvs?start_date=2025-02-10 00:00&end_date=2026-03-10 00:00
   body: none
   auth: none
+}
+
+params:query {
+  start_date: 2025-02-10 00:00
+  end_date: 2026-03-10 00:00
 }

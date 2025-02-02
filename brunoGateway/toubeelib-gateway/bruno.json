@@ -8,6 +8,6 @@
   ],
   "presets": {
     "requestType": "http",
-    "requestUrl": "http://localhost:6081"
+    "requestUrl": "{{gateway}}"
   }
 }

@@ -1,11 +1,11 @@
 meta {
-  name: signin microservice praticien
+  name: signin praticien
   type: http
-  seq: 6
+  seq: 1
 }
 
 post {
-  url: http://localhost:6081/signin
+  url: {{gateway}}/signin
   body: json
   auth: none
 }
@@ -17,6 +17,10 @@ body:json {
     "email":"tbaron@traore.org",
     "password": "tbaron"
   }
+}
+
+assert {
+  res.status: eq 201
 }
 
 script:post-response {
