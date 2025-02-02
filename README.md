@@ -1,7 +1,8 @@
 # Toubeelib GATEWAY
-DAZA Sasha
-DESPAQUIS Liam
-PINOT Gaëtan
+Github : https://github.com/LiamDespaquis/toubeelib-gateway  
+DAZA Sasha  
+DESPAQUIS Liam  
+PINOT Gaëtan  
 
 ## Installation
 
@@ -33,7 +34,16 @@ Il serat peut être nécéssaires de faire un `make chmodLog` pour que les fichi
 ## Description
 
 Il y à 3 services, un pour les praticiens, un pour les rendez vous et un pour l'authentification.
-Celui pour les rendez vous sert aussi pour les patients car jugé non nécéssaire pour l'exercice étant donné qu'on en a déjà créé 3.
+Celui pour les rendez vous sert aussi pour les patients car jugé non nécéssaire pour l'exercice étant donné qu'on en a déjà créé 3.  
+Le service mailer est utilisé pour envoyer des mails de confirmation de création de rendez vous. Ce n'est pas vraiment un service, 
+donc si il y à une érreur il s'arrette et il faut le relancer avec `docker compose up -d mailer`.  
+La vrai solution aurait été de créer un véritable service qui se relance tout seul au sein du docker.  
+Il envoi les mails au serveur mailcatcher, on peut voir les mails reçu sur http://localhost:6079.
+
+## Données
+
+Les bases de données sont générés par des scripts php, ils peuvent être lancé avec `make` `genereDbPraticien`, `genereDbRdv` et `genererDbAuth`.  
+Des données nécéssaires au tests sont fournis diréctement dans la [collection bruno](#tests).
 
 ## Tests
 
