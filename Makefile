@@ -1,6 +1,6 @@
 install: 
-	make composerInstalle
 	make up
+	make composerInstalle
 	make genereDbPraticien
 	make genereDbRdv
 	make genererDbAuth

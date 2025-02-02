@@ -91,7 +91,7 @@ services:
       - ./app-rdv/sql:/var/sql
     working_dir: /var/www
     depends_on:
-      - toubeelib.rdv.db
+      - toubeelib.rdvs.db
     # command: php -S 0.0.0.0:80 -t /var/php/public
 
   toubeelib.rdvs.db:
