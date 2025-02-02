@@ -1,7 +1,7 @@
 driver=pgsql
 user=user
 password=toto
-host=toubeelib.db
+host=toubeelib.praticiens.db
 port=5432
 dbname=toubeelib
 
