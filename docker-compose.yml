@@ -94,15 +94,13 @@ services:
       - toubeelib.rdv.db
     # command: php -S 0.0.0.0:80 -t /var/php/public
 
-  toubeelib.rdv.db:
+  toubeelib.rdvs.db:
     image: 'postgres:latest'
     env_file:
       - ./toubeelibdb.env
     container_name: toubeelib.rdv.db
     ports:
       - $PORT_RDV_BD:5432
-    volumes:
-      - ./app/sql:/var/sql'
 
   toubeelib.praticiens.db:
     image: 'postgres:latest'
@@ -110,8 +108,6 @@ services:
     container_name: toubeelib.praticiens.db
     ports:
       - $PORT_PRATICIEN_BD:5432
-    volumes:
-      - ./app/sql:/var/sql'
     
 
   api.toubeelib.auth:
