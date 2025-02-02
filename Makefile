@@ -5,6 +5,9 @@ install:
 	make genereDbPraticien
 	make genereDbRdv
 
+chmodLog:
+	chmod 777 ./logs -R
+
 up:
 	docker compose up -d --remove-orphans --build
 

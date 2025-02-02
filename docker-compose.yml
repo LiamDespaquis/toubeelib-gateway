@@ -52,8 +52,6 @@ services:
     env_file: ./toubeelibauthdb.env
     ports:
       - $PORT_AUTH_BD:5432
-    volumes:
-      - ./app/sql:/var/sql'
 
 # micro service praticien 
 
@@ -70,7 +68,7 @@ services:
     volumes:
       - ./app-praticiens:/var/www
       - ./app-praticiens/public:/var/www/html
-      - ./app-praticiens/sql:/var/sql
+      - ./logs/api_praticiens:/var/www/var/
     working_dir: /var/www
     depends_on:
       - toubeelib.praticiens.db
@@ -88,7 +86,7 @@ services:
     volumes:
       - ./app-rdv:/var/www
       - ./app-rdv/public:/var/www/html
-      - ./app-rdv/sql:/var/sql
+      - ./logs/api_rdvs:/var/www/var/
     working_dir: /var/www
     depends_on:
       - toubeelib.rdvs.db
@@ -118,7 +116,8 @@ services:
     volumes:
       - ./app-auth:/var/www
       - ./app-auth/public:/var/www/html
-      - ./app-auth/sql:/var/sql
+      - ./logs/api_auth:/var/www/var/
+      - ./sql:/var/sql
     working_dir: /var/www
     env_file: ./toubeelib.env
     depends_on:

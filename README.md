@@ -4,6 +4,7 @@ DESPAQUIS Liam
 PINOT Gaëtan
 
 ## Config
+
 Fichier de config à créer (copier le fichier .dist existant en enlevant .dist):  
 (Ils peuvent aussi êtres copié diréctement avec `make confFiles`)  
 - `amqp.env`
@@ -15,8 +16,13 @@ Fichier de config à créer (copier le fichier .dist existant en enlevant .dist)
 - `./app-praticiens/config/pdoConfig.ini`
 - `./app-auth/config/pdoConfigAuth.ini`  
 Les mots de passes doivent être consistant dans la db  
+
+
 Utiliser `make install` pour installer le projet de zero avec composer dans le docker, les autres commandes makes peuvent être utilisés individuellement. 
 `make composerUpdate` pour mettre à jour les dépendances.  
+
+
+Il serat peut être nécéssaires de faire un `make chmodLog` pour que les fichier de logs aient les bonnes permissions dans le docker.  
 
 ## Tests
 
