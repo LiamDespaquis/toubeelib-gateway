@@ -46,25 +46,6 @@ services:
         condition: service_healthy
     # command: php -S 0.0.0.0:80 -t /var/php/public
 
-  # service api.toubeelib : api pour la prise de rdv
-  api.toubeelib:
-    image: canals/php:8.2-cli
-    # build:
-    #   context: build
-    #   dockerfile: 8.3-cli.Dockerfile
-    env_file:
-      - path: ./toubeelib.env
-    container_name: api_toubeelib_gt
-    ports:
-      - $PORT_API:80
-    volumes:
-      - ./app:/var/php
-      - ./sql:/var/sql
-    working_dir: /var/php
-    depends_on:
-      - toubeelib.db
-    command: php -S 0.0.0.0:80 -t /var/php/public
-
     # service toubeelib.db : base de données postgresql
   toubeelib.auth.db:
     image: 'postgres:latest'
@@ -73,22 +54,6 @@ services:
       - $PORT_AUTH_BD:5432
     volumes:
       - ./app/sql:/var/sql'
-
-  toubeelib.db:
-    image: 'postgres:latest'
-    env_file: ./toubeelibdb.env
-    ports:
-      - $PORT_DB:5432
-    volumes:
-      - ./app/sql:/var/sql'
-  #
-  # service administration des bases sql
-  #
-  adminer:
-    image: adminer
-    ports:
-      - $PORT_ADMINER:8080
-
 
 # micro service praticien 
 

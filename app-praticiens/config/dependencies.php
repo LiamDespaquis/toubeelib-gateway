@@ -1,33 +1,33 @@
 <?php
 
 use Psr\Container\ContainerInterface;
-use toubeelib\praticiens\core\repositoryInterfaces\AuthRepositoryInterface;
-use toubeelib\praticiens\core\repositoryInterfaces\PatientRepositoryInterface;
+
+
 use toubeelib\praticiens\core\repositoryInterfaces\PraticienRepositoryInterface;
-use toubeelib\praticiens\core\repositoryInterfaces\RdvRepositoryInterface;
+
 use toubeelib\praticiens\core\services\AuthorizationPatientService;
 use toubeelib\praticiens\core\services\AuthorizationPatientServiceInterface;
-use toubeelib\praticiens\core\services\ServiceAuth;
-use toubeelib\praticiens\core\services\ServiceAuthInterface;
-use toubeelib\praticiens\core\services\patient\ServicePatient;
-use toubeelib\praticiens\core\services\patient\ServicePatientInterface;
+
+
+
+
 use toubeelib\praticiens\core\services\praticien\AuthorizationPraticienService;
 use toubeelib\praticiens\core\services\praticien\AuthorizationPraticienServiceInterface;
 use toubeelib\praticiens\core\services\praticien\ServicePraticien;
 use toubeelib\praticiens\core\services\praticien\ServicePraticienInterface;
-use toubeelib\praticiens\core\services\rdv\AuthorizationRendezVousService;
-use toubeelib\praticiens\core\services\rdv\AuthorizationRendezVousServiceInterface;
-use toubeelib\praticiens\core\services\rdv\ServiceRDV;
-use toubeelib\praticiens\core\services\rdv\ServiceRDVInterface;
-use toubeelib\praticiens\infrastructure\repositories\PgAuthRepository;
-use toubeelib\praticiens\infrastructure\repositories\PgPatientRepository;
+
+
+
+
+
+
 use toubeelib\praticiens\infrastructure\repositories\PgPraticienRepository;
-use toubeelib\praticiens\infrastructure\repositories\PgRdvRepository;
-use toubeelib\praticiens\middlewares\AuthnMiddleware;
-use toubeelib\praticiens\middlewares\AuthzPatient;
+
+
+
 use toubeelib\praticiens\middlewares\AuthzPraticiens;
-use toubeelib\praticiens\middlewares\AuthzRDV;
-use toubeelib\praticiens\middlewares\CorsMiddleware;
+
+
 use toubeelib\praticiens\providers\auth\AuthnProviderInterface;
 use toubeelib\praticiens\providers\auth\JWTAuthnProvider;
 use toubeelib\praticiens\providers\auth\JWTManager;
@@ -39,22 +39,13 @@ return [
 
     //Repository interface
     PraticienRepositoryInterface::class => DI\autowire(PgPraticienRepository::class),
-    RdvRepositoryInterface::class => DI\autowire(PgRdvRepository::class),
-    AuthRepositoryInterface::class => DI\autowire(PgAuthRepository::class),
-    PatientRepositoryInterface::class => DI\autowire(PgPatientRepository::class),
 
     //Services
     ServicePraticienInterface::class => DI\autowire(ServicePraticien::class),
-    ServiceRDVInterface::class => DI\autowire(ServiceRDV::class),
-    ServiceAuthInterface::class => DI\autowire(ServiceAuth::class),
-    ServicePatientInterface::class => DI\autowire(ServicePatient::class),
-    AuthorizationRendezVousServiceInterface::class => DI\autowire(AuthorizationRendezVousService::class),
     AuthorizationPatientServiceInterface::class => DI\autowire(AuthorizationPatientService::class),
     AuthorizationPraticienServiceInterface::class => DI\autowire(AuthorizationPraticienService::class),
 
 
-    AuthzRDV::class => DI\autowire(),
-    AuthzPatient::class => DI\autowire(),
     AuthzPraticiens::class => DI\autowire(),
 
     //PDO
@@ -83,11 +74,6 @@ return [
     },
 
     Logger::class => DI\create(Logger::class)->constructor('Toubeelib_logger', [DI\get(StreamHandler::class)]),
-
-
-    //midleware
-    AuthnMiddleware::class => DI\autowire(AuthnMiddleware::class),
-    CorsMiddleware::class => DI\autowire(CorsMiddleware::class),
 
 
 ];

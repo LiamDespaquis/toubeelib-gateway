@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 use Slim\Exception\HttpNotFoundException;
 use Slim\Routing\RouteCollectorProxy;
-use toubeelib\praticiens\application\actions\GetDisposPraticienDate;
+
 use toubeelib\praticiens\application\actions\GetPraticien;
-use toubeelib\praticiens\application\actions\GetPraticienPlanning;
+
 use toubeelib\praticiens\application\actions\GetSpecialite;
 use toubeelib\praticiens\application\actions\HomeAction;
 use toubeelib\praticiens\application\actions\SearchPraticien;
-use toubeelib\praticiens\middlewares\AuthnMiddleware;
-use toubeelib\praticiens\middlewares\AuthzPraticiens;
 
 return function (\Slim\App $app): \Slim\App {
 

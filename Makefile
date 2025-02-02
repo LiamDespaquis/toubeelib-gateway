@@ -1,35 +1,45 @@
-phpdocker=api_toubeelib_gt
-phpdockerPraticien=api_toubeelib_praticien
-phpdockerRdv=api_toubeelib_rdv
-phpdockerAuth=api_toubeelib_auth
 install: 
+	make composerInstalle
 	make up
-	make composer
-	make genereDb
 	make genereDbPraticien
 	make genereDbRdv
+	make genererDbAuth
+
 up:
 	docker compose up -d --remove-orphans --build
-composer:
-	docker exec -it $(phpdocker) composer install
-	docker exec -it gateway_toubeelib composer install
+
+composerUpdate:
+	docker compose run --rm api.toubeelib.rdv composer update
+	docker compose run --rm api.toubeelib.praticiens composer update
+	docker compose run --rm api.toubeelib.auth composer update
+	docker compose run --rm mailer composer update
+	docker compose run --rm gateway.toubeelib composer update
+
+composerInstalle:
 	docker compose run --rm api.toubeelib.rdv composer install
 	docker compose run --rm api.toubeelib.praticiens composer install
 	docker compose run --rm api.toubeelib.auth composer install
-genereDb:
-	docker exec -it $(phpdocker) php ./src/infrastructure/genereAuthDb.php
-	docker exec -it $(phpdocker) php ./src/infrastructure/genereDB.php
+	docker compose run --rm mailer composer install
+	docker compose run --rm gateway.toubeelib composer install
+
 genereDbPraticien:
-	docker exec -it $(phpdockerPraticien) php ./src/infrastructure/genereDB.php
+	docker compose exec  api.toubeelib.praticiens php ./src/infrastructure/genereDB.php
+
 genereDbRdv:
-	docker exec -it $(phpdockerRdv) php ./src/infrastructure/genereDB.php
+	docker compose exec  api.toubeelib.rdv php ./src/infrastructure/genereDB.php
+
 genererDbAuth: 
-	docker exec -it $(phpdockerAuth) php ./src/infrastructure/genereDB.php
+	docker compose exec  api.toubeelib.auth php ./src/infrastructure/genereDB.php
+
 watchLogs:
 	watch -n 2 tail app/var/logs
+
 confFiles:
 	cp ./toubeelib.env.dist ./toubeelib.env 
 	cp ./toubeelibdb.env.dist ./toubeelibdb.env 
 	cp ./toubeelibauthdb.env.dist ./toubeelibauthdb.env
-	cp ./app/config/pdoConfig.ini.dist ./app/config/pdoConfig.ini
-	cp ./app/config/pdoConfigAuth.ini.dist ./app/config/pdoConfigAuth.ini
+	cp amqp.env.dist amqp.env
+	cp mailer.env.dist mailer.env
+	cp ./app-rdv/config/pdoConfig.ini.dist ./app-rdv/config/pdoConfig.ini
+	cp ./app-praticiens/config/pdoConfig.ini.dist ./app-praticiens/config/pdoConfig.ini
+	cp ./app-auth/config/pdoConfigAuth.ini.dist ./app-auth/config/pdoConfigAuth.ini
