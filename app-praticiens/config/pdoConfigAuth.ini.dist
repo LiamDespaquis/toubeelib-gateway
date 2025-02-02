@@ -1,0 +1,7 @@
+driver=pgsql
+user=user
+password=toto
+host=toubeelib.auth.db
+port=5432
+dbname=toubeelib
+

@@ -41,6 +41,8 @@ confFiles:
 	cp ./toubeelibauthdb.env.dist ./toubeelibauthdb.env
 	cp ./amqp.env.dist ./amqp.env
 	cp ./mailer.env.dist ./mailer.env
+	cp ./app-rdv/config/pdoConfigAuth.ini.dist ./app-rdv/config/pdoConfigAuth.ini
 	cp ./app-rdv/config/pdoConfig.ini.dist ./app-rdv/config/pdoConfig.ini
+	cp ./app-praticiens/config/pdoConfigAuth.ini.dist ./app-praticiens/config/pdoConfigAuth.ini
 	cp ./app-praticiens/config/pdoConfig.ini.dist ./app-praticiens/config/pdoConfig.ini
 	cp ./app-auth/config/pdoConfigAuth.ini.dist ./app-auth/config/pdoConfigAuth.ini
