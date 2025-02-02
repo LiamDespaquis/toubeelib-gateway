@@ -30,3 +30,7 @@ Il faut ajuster les requettes avecs des ids de rendez vous car ils sont regéné
 Il faut aussi ajuster les heures de creation du rdv en fonction des disponibilité du praticien.  
 
 
+## TODO
+~.env dans maekfile~
+.ini dans les micro service qui pointe vers les bonnes bd
+

@@ -35,11 +35,12 @@ watchLogs:
 	watch -n 2 tail app/var/logs
 
 confFiles:
+	cp ./.env.dist ./.env
 	cp ./toubeelib.env.dist ./toubeelib.env 
 	cp ./toubeelibdb.env.dist ./toubeelibdb.env 
 	cp ./toubeelibauthdb.env.dist ./toubeelibauthdb.env
-	cp amqp.env.dist amqp.env
-	cp mailer.env.dist mailer.env
+	cp ./amqp.env.dist ./amqp.env
+	cp ./mailer.env.dist ./mailer.env
 	cp ./app-rdv/config/pdoConfig.ini.dist ./app-rdv/config/pdoConfig.ini
 	cp ./app-praticiens/config/pdoConfig.ini.dist ./app-praticiens/config/pdoConfig.ini
 	cp ./app-auth/config/pdoConfigAuth.ini.dist ./app-auth/config/pdoConfigAuth.ini
