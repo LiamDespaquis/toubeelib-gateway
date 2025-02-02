@@ -34,9 +34,6 @@ genereDbRdv:
 genererDbAuth: 
 	docker compose exec  api.toubeelib.auth php ./src/infrastructure/genereAuthDB.php
 
-watchLogs:
-	watch -n 2 tail app/var/logs
-
 confFiles:
 	cp ./.env.dist ./.env
 	cp ./toubeelib.env.dist ./toubeelib.env 
