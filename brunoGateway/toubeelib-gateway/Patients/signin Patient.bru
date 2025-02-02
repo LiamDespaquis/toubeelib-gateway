@@ -18,3 +18,8 @@ body:json {
     "password": "munoz.theophile"
   }
 }
+
+script:post-response {
+  // stock le header access-token dans une variable bruno
+  bru.setVar("access-token",res.headers['access-token']);
+}
